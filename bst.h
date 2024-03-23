@@ -32,16 +32,17 @@ class BST
     public:
         BST();
         ~BST();
+        bool empty() const;
         void insert(Data data, Key key);
-        Data get(Key key);
+        Data get(Key key) const;
         void remove(Key key);
-        Data max_data();
-        Key max_key();
-        Data min_data();
-        Key min_key();
-        Key successor(Key key);
-        void in_order();
+        Data max_data() const;
+        Key max_key() const;
+        Data min_data() const;
+        Key min_key() const;
+        Key successor(Key key) const;
+        string in_order() const;
         void trim(Key key, Key key);
-        void to_string();
+        string to_string() const;
 };
 #endif // BST_H
