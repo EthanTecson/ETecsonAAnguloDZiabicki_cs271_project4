@@ -19,7 +19,9 @@ class Node {
         Node<Data, Key>* left;
         Node<Data, Key>* right;
         int key;
+        void deleteNode(Node<Data, Key>* node); //Helper function for deconstructor
         friend class BST<Data, Key>; // Allows BST to access these contents
+    
 
 };
 

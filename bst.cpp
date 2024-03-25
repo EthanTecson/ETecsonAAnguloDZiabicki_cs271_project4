@@ -9,8 +9,28 @@
  */
 template <typename Data, typename Key>
 BST<Data, Key>::BST() {
-
+    root = nullptr;
 }
+
+/**
+ * Delete Node function
+ *
+ *
+ *
+ *
+ */
+ template <typename Data, typename Key>
+ void Node<Data, Key>::deleteNode(Node<Data, Key>* node){ //Havent tested since we have no insert func
+    // If root isn't empty
+    if(!node = nullptr){
+        // Recursively go into the children of the parent node
+        deleteNode(node->left);
+        deleteNode(node->right);
+
+        // Delete them
+        delete;
+    }
+ }
 
 /**
  * BST deconstructor
@@ -21,8 +41,8 @@ BST<Data, Key>::BST() {
  */
 template <typename Data, typename Key>
 BST<Data, Key>::~BST() {
-    
-}
+    deleteNode(root);
+
 
 /**
  * insert function
