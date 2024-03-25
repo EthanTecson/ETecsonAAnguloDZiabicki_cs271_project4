@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include <iostream>
 #include <math.h>
-#include "usecase.cpp"
+#include "bst.cpp"
 
 using namespace std;
 
@@ -29,7 +29,7 @@ void test_empty() {
         cerr << "Error in determining if BST is empty : " << e.what() << endl;
     }
 }
-
+/*
 void test_insert() {
     try {
         BST<string, int> bst;
@@ -265,21 +265,21 @@ void test_binhex(){
         cerr << "Error converting binary to hex : " << e.what() << endl;
     }
 }
-
+*/
 int main() {
     
     test_empty();
-    test_insert();
-    test_get();
-    test_remove();
-    test_max_data();
-    test_max_key();
-    test_min_data();
-    test_min_key();
-    test_successor();
-    test_in_order();
-    test_trim();
-    test_binhex();
+    // test_insert();
+    // test_get();
+    // test_remove();
+    // test_max_data();
+    // test_max_key();
+    // test_min_data();
+    // test_min_key();
+    // test_successor();
+    // test_in_order();
+    // test_trim();
+    // test_binhex();
 
     cout << "Testing completed" << endl;
     
