@@ -42,6 +42,7 @@ BST<Data, Key>::BST() {
 template <typename Data, typename Key>
 BST<Data, Key>::~BST() {
     deleteNode(root);
+}
 
 
 /**
@@ -53,6 +54,11 @@ BST<Data, Key>::~BST() {
  */
 template <typename Data, typename Key>
 void BST<Data, Key>::insert(Data data, Key key) {
+    if(root == nullptr){
+        root = Node(data, key);
+    }else{
+        while()
+    }
 }
 
 /**
@@ -63,7 +69,7 @@ void BST<Data, Key>::insert(Data data, Key key) {
  *
  */
 template <typename Data, typename Key>
-Data BST<Data, Key>::get(Key key) {
+Data BST<Data, Key>::get(Key key) const {
 
 }
 
@@ -87,7 +93,7 @@ void BST<Data, Key>::remove(Key key) {
  *
  */
 template <typename Data, typename Key>
-Data BST<Data, Key>::max_data() {
+Data BST<Data, Key>::max_data() const {
     
 }
 
@@ -99,7 +105,7 @@ Data BST<Data, Key>::max_data() {
  *
  */
 template <typename Data, typename Key>
-Key BST<Data, Key>::max_key() {
+Key BST<Data, Key>::max_key() const {
     
 }
 
@@ -111,7 +117,7 @@ Key BST<Data, Key>::max_key() {
  *
  */
 template <typename Data, typename Key>
-Data BST<Data, Key>::min_data() {
+Data BST<Data, Key>::min_data() const {
     
 }
 
@@ -123,7 +129,7 @@ Data BST<Data, Key>::min_data() {
  *
  */
 template <typename Data, typename Key>
-Key BST<Data, Key>::min_key() {
+Key BST<Data, Key>::min_key() const {
     
 }
 
@@ -135,7 +141,7 @@ Key BST<Data, Key>::min_key() {
  *
  */
 template <typename Data, typename Key>
-Key BST<Data, Key>::successor(Key key) {
+Key BST<Data, Key>::successor(Key key) const {
     
 }
 
@@ -147,7 +153,7 @@ Key BST<Data, Key>::successor(Key key) {
  *
  */
 template <typename Data, typename Key>
-void BST<Data, Key>::in_order() {
+string BST<Data, Key>::in_order() const {
     
 }
 
@@ -171,6 +177,6 @@ void BST<Data, Key>::trim(Key key1, Key key2) {
  *
  */
 template <typename Data, typename Key>
-void BST<Data, Key>::to_string() {
+string BST<Data, Key>::to_string() const {
     
 }
