@@ -1,4 +1,6 @@
 #include "bst.h"
+#include <stringstream>
+#include <iostream>
 
 /**
  * BST constructor
@@ -106,7 +108,20 @@ Data BST<Data, Key>::max_data() const {
  */
 template <typename Data, typename Key>
 Key BST<Data, Key>::max_key() const {
-    
+    Node *x = (Data data, Key key);
+    Node *y = x;
+    if(x == nullptr){
+        return x;
+    }
+    while(x != nullptr){
+        y = x;
+        x = x -> right;
+        if(x-> right == nullptr){
+            return y.key;
+        }
+    }
+    return x.key;
+
 }
 
 /**
