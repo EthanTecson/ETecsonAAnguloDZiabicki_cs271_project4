@@ -87,14 +87,14 @@ void BST<Data, Key>::insert(Data data, Key key) {
 template <typename Data, typename Key>
 Data BST<Data, Key>::get(Key key) const {
     Node *temp = root;
-    while(temp != nullptr && temp.key != key &&){
+    while(temp != nullptr && temp->key != key){
         if(key < temp){
-            temp = temp.left;
+            temp = temp->left;
         }else{
-            temp = temp.right;
+            temp = temp->right;
         }
     }
-    return temp.data;
+    return temp->data;
 }
 
 /**
@@ -155,10 +155,10 @@ Data BST<Data, Key>::min_data() const {
 template <typename Data, typename Key>
 Key BST<Data, Key>::min_key() const {
     Node *temp = root;
-    while(temp.left != nullptr){
-        temp = temp.left;
+    while(temp->left != nullptr){
+        temp = temp->left;
     }
-    return temp.key
+    return temp->key;
 }
 
 /**
