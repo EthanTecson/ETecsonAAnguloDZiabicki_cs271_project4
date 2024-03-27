@@ -1,4 +1,6 @@
 #include "bst.h"
+#include <iostream>
+#include <sstream>
 
 /**
  * BST constructor
@@ -54,11 +56,25 @@ BST<Data, Key>::~BST() {
  */
 template <typename Data, typename Key>
 void BST<Data, Key>::insert(Data data, Key key) {
-    if(root == nullptr){
-        root = Node(data, key);
-    }else{
-        while()
-    }
+    // if(root == nullptr){
+    //     root = Node(data, key);
+    // }else{
+    //     Node *temp = root;
+    //     Node *parent = nullptr;
+    //     while(temp != nullptr){
+    //         parent = temp;
+    //         if(key < temp.key){
+    //             temp = temp.left;
+    //         }else{
+    //             temp = temp.right;
+    //         }
+    //     }
+    //     if(key < parent){
+    //         parent.left = Node(data, key);
+    //     }else{
+    //         parent.right = Node(data, key);
+    //     }
+    // }
 }
 
 /**
@@ -70,7 +86,15 @@ void BST<Data, Key>::insert(Data data, Key key) {
  */
 template <typename Data, typename Key>
 Data BST<Data, Key>::get(Key key) const {
-
+    Node *temp = root;
+    while(temp != nullptr && temp.key != key &&){
+        if(key < temp){
+            temp = temp.left;
+        }else{
+            temp = temp.right;
+        }
+    }
+    return temp.data;
 }
 
 /**
@@ -130,7 +154,11 @@ Data BST<Data, Key>::min_data() const {
  */
 template <typename Data, typename Key>
 Key BST<Data, Key>::min_key() const {
-    
+    Node *temp = root;
+    while(temp.left != nullptr){
+        temp = temp.left;
+    }
+    return temp.key
 }
 
 /**
@@ -178,5 +206,6 @@ void BST<Data, Key>::trim(Key key1, Key key2) {
  */
 template <typename Data, typename Key>
 string BST<Data, Key>::to_string() const {
+    
     
 }
