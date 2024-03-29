@@ -1,6 +1,7 @@
 #include "bst.h"
 #include <iostream>
 #include <sstream>
+#include <string>
 
 //===================================
 // Node Class
@@ -83,6 +84,21 @@ BST<Data, Key>::~BST() {
     }
 }
 
+/**
+ * empty function
+ *
+ *
+ *
+ *
+ */
+template <typename Data, typename Key>
+bool BST<Data, Key>::empty() const{
+    if (root == nullptr){
+        return true;
+    }
+    return false;
+}
+
 
 /**
  * insert function
@@ -155,7 +171,11 @@ void BST<Data, Key>::remove(Key key) {
  */
 template <typename Data, typename Key>
 Data BST<Data, Key>::max_data() const {
-    
+        Node<Data, Key> *temp = root;
+    while(temp->right != nullptr){
+        temp = temp->right;
+    }
+    return temp->data;
 }
 
 /**
@@ -167,7 +187,11 @@ Data BST<Data, Key>::max_data() const {
  */
 template <typename Data, typename Key>
 Key BST<Data, Key>::max_key() const {
-    
+    Node<Data, Key> *temp = root;
+    while(temp->right != nullptr){
+        temp = temp->right;
+    }
+    return temp->key;
 }
 
 /**
@@ -179,7 +203,11 @@ Key BST<Data, Key>::max_key() const {
  */
 template <typename Data, typename Key>
 Data BST<Data, Key>::min_data() const {
-    
+        Node<Data, Key> *temp = root;
+    while(temp->left != nullptr){
+        temp = temp->left;
+    }
+    return temp->data;
 }
 
 /**
@@ -278,9 +306,17 @@ template <typename Data, typename Key>
 string BST<Data, Key>::in_order_tree_walk(Node<Data, Key> *x) const {
     stringstream ss;
     if (x != nullptr) {
-        ss << in_order_tree_walk(x->left);
-        ss << x->key << " ";
-        ss << in_order_tree_walk(x->right);
+        string left = in_order_tree_walk(x->left);
+        string right = in_order_tree_walk(x->right);
+        ss << left;
+        if (!left.empty()) {
+            ss << " ";
+        }
+        ss << x->key;
+        if (!right.empty()) {
+            ss << " ";
+        }
+        ss << right;
     }
     return ss.str();
 }
