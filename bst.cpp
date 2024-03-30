@@ -2,6 +2,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+using namespace std;
 
 //===================================
 // Node Class
@@ -84,21 +85,6 @@ BST<Data, Key>::~BST() {
     }
 }
 
-/**
- * empty function
- *
- *
- *
- *
- */
-template <typename Data, typename Key>
-bool BST<Data, Key>::empty() const{
-    if (root == nullptr){
-        return true;
-    }
-    return false;
-}
-
 
 /**
  * insert function
@@ -137,18 +123,18 @@ void BST<Data, Key>::insert(Data data, Key key) {
  *
  *
  */
-// template <typename Data, typename Key>
-// Data BST<Data, Key>::get(Key key) const {
-//     Node *temp = root;
-//     while(temp != nullptr && temp->key != key){
-//         if(key < temp){
-//             temp = temp->left;
-//         }else{
-//             temp = temp->right;
-//         }
-//     }
-//     return temp->data;
-// }
+template <typename Data, typename Key>
+Data BST<Data, Key>::get(Key key) const {
+    Node *temp = root;
+    while(temp != nullptr && temp->key != key){
+        if(key < temp){
+            temp = temp->left;
+        }else{
+            temp = temp->right;
+        }
+    }
+    return temp->data;
+}
 
 /**
  * remove function
@@ -171,11 +157,7 @@ void BST<Data, Key>::remove(Key key) {
  */
 template <typename Data, typename Key>
 Data BST<Data, Key>::max_data() const {
-        Node<Data, Key> *temp = root;
-    while(temp->right != nullptr){
-        temp = temp->right;
-    }
-    return temp->data;
+    
 }
 
 /**
@@ -203,11 +185,7 @@ Key BST<Data, Key>::max_key() const {
  */
 template <typename Data, typename Key>
 Data BST<Data, Key>::min_data() const {
-        Node<Data, Key> *temp = root;
-    while(temp->left != nullptr){
-        temp = temp->left;
-    }
-    return temp->data;
+    
 }
 
 /**
@@ -235,7 +213,36 @@ Key BST<Data, Key>::min_key() const {
  */
 template <typename Data, typename Key>
 Key BST<Data, Key>::successor(Key key) const {
-    
+    //find the node with the given key
+    Node<Data, Key> *temp = root;
+    while(temp != nullptr && temp->key != key){
+        if(temp->key < key){
+            temp = temp->left;
+        }else{
+            temp = temp->right;
+        }
+    }
+    //if there is no node with that key, return default key
+    if(temp == nullptr){
+        return Key();
+    }else{
+        //if there is a right child, find the min key in that right subtree
+        if(temp->right != nullptr){
+            temp = temp->right;
+            while(temp->left != nullptr){
+                temp = temp->left;
+            }
+            return temp->key;
+        //otherwise, 
+        }else{
+            Node<Data, Key> parent = temp->parent;
+            while(parent != nullptr && temp == parent->right){
+                temp = parent;
+                parent = temp->parent;
+            }
+            return parent->key;
+        }
+    }
 }
 
 /**
@@ -306,17 +313,9 @@ template <typename Data, typename Key>
 string BST<Data, Key>::in_order_tree_walk(Node<Data, Key> *x) const {
     stringstream ss;
     if (x != nullptr) {
-        string left = in_order_tree_walk(x->left);
-        string right = in_order_tree_walk(x->right);
-        ss << left;
-        if (!left.empty()) {
-            ss << " ";
-        }
-        ss << x->key;
-        if (!right.empty()) {
-            ss << " ";
-        }
-        ss << right;
+        ss << in_order_tree_walk(x->left);
+        ss << x->key << " ";
+        ss << in_order_tree_walk(x->right);
     }
     return ss.str();
 }
