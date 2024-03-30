@@ -5,10 +5,16 @@
 // Ethan Tecson, Andrew Angulo, Daniel Ziabicki  //
 //-----------------------------------------------//
 
+
 #ifndef BST_H
 #define BST_H
-using namespace std;
+
 #include <iostream>
+using namespace std;
+
+
+template <typename Data, typename Key>
+class BST;
 
 
 template <typename Data, typename Key>
@@ -18,11 +24,15 @@ class Node {
         Key key;
         Node<Data, Key>* left;
         Node<Data, Key>* right;
-        Node<Data, key>* parent;
-        int key;
-        void deleteNode(Node<Data, Key>* node); //Helper function for deconstructor
+        Node<Data, Key>* parent;
+        // int key;
         friend class BST<Data, Key>; // Allows BST to access these contents
-    
+    public:
+        Node();
+        Node(Data d, Key k);
+        ~Node();
+        void deleteNode(Node<Data, Key>* node); //Helper function for deconstructor
+        Node<Data, Key>& operator=(const Node<Data, Key>& Node2);
 
 };
 
@@ -45,7 +55,9 @@ class BST
         Key min_key() const;
         Key successor(Key key) const;
         string in_order() const;
-        void trim(Key key, Key key);
+        // void trim(Key key, Key key); // Giving error for redefinition
         string to_string() const;
+        string in_order_tree_walk(Node<Data, Key> *x) const;
+        string insertion_order_tree_walk(Node<Data, Key> *x) const;
 };
 #endif // BST_H
