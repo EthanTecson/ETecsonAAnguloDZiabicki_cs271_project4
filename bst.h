@@ -59,5 +59,7 @@ class BST
         string to_string() const;
         string in_order_tree_walk(Node<Data, Key> *x) const;
         string insertion_order_tree_walk(Node<Data, Key> *x) const;
+        Node<Data, Key>* search(Node<Data, Key>* root, Key key) const;
+
 };
 #endif // BST_H
