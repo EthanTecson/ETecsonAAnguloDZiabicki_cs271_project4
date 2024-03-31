@@ -55,12 +55,10 @@ class BST
         Key successor(Key key) const;
         string in_order() const;
         void trim(Key key1, Key key2); // Giving error for redefinition
-        string to_string() const;
         string in_order_tree_walk(Node<Data, Key> *x) const;
         string insertion_order_tree_walk(Node<Data, Key> *x) const;
         Node<Data, Key>* search(Node<Data, Key>* root, Key key) const;
         Node<Data, Key>* trim_helper(Node<Data, Key>* node, Key low, Key high);
         string to_string() const;
-        string in_order_tree_walk(Node<Data, Key> *x) const;
 };
 #endif // BST_H
