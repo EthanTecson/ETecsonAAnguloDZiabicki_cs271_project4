@@ -252,7 +252,8 @@ Key BST<Data, Key>::successor(Key key) const {
  */
 template <typename Data, typename Key>
 string BST<Data, Key>::in_order() const {
-    return in_order_tree_walk(root);
+    string str = in_order_tree_walk(root);
+    return str.substr(0, str.size()-1);
 }
 
 /**
