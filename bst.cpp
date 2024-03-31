@@ -144,6 +144,57 @@ Data BST<Data, Key>::get(Key key) const {
 }
 
 /**
+ * remove helper function
+ *
+ *
+ *
+ *
+ */
+template <typename Data, typename Key>
+Node<Data, Key>* BST<Data, Key>::remove_helper(Node<Data, Key>* root, Key key) {
+    
+    // if BST is empty
+    if (root == nullptr) {
+        return root;
+    }
+
+    // Searching for the key in the BST
+    if (key < root->key) {
+        root->left = remove_helper(root->left, key);
+    } 
+    else if (key > root->key) {
+        root->right = remove_helper(root->right, key);
+    } 
+    else {
+        // node with only one child or no child
+        if (root->left == nullptr) {
+            Node<Data, Key>* temp = root->right;
+            delete root;
+            return temp;
+        } 
+        else if (root->right == nullptr) {
+            Node<Data, Key>* temp = root->left;
+            delete root;
+            return temp;
+        }
+
+        // node with two children: get the successor (smallest in the right subtree)
+        Key successorKey = successor(root->key);
+
+        // getting the node of the successor
+        Node<Data, Key>* temp = search(root, successorKey);
+
+        // copy the successor to this node
+        root->key = temp->key;
+        root->data = temp->data;
+
+        // delete the successor
+        root->right = remove_helper(root->right, temp->key);
+    }
+    return root;
+}
+
+/**
  * remove function
  *
  *
@@ -152,7 +203,7 @@ Data BST<Data, Key>::get(Key key) const {
  */
 template <typename Data, typename Key>
 void BST<Data, Key>::remove(Key key) {
-    //search()
+    root = remove_helper(root, key);
 }
 
 /**
