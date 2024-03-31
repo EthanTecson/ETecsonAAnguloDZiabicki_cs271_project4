@@ -130,13 +130,68 @@ template <typename Data, typename Key>
 Data BST<Data, Key>::get(Key key) const {
     Node<Data, Key> *temp = root;
     while(temp != nullptr && temp->key != key){
-        if(key < temp){
+        if(key < temp->key){
             temp = temp->left;
         }else{
             temp = temp->right;
         }
     }
-    return temp->data;
+    if(temp == nullptr){
+        return Data();
+    }else{
+        return temp->data;
+    }
+}
+
+/**
+ * remove helper function
+ *
+ *
+ *
+ *
+ */
+template <typename Data, typename Key>
+Node<Data, Key>* BST<Data, Key>::remove_helper(Node<Data, Key>* root, Key key) {
+    
+    // if BST is empty
+    if (root == nullptr) {
+        return root;
+    }
+
+    // Searching for the key in the BST
+    if (key < root->key) {
+        root->left = remove_helper(root->left, key);
+    } 
+    else if (key > root->key) {
+        root->right = remove_helper(root->right, key);
+    } 
+    else {
+        // node with only one child or no child
+        if (root->left == nullptr) {
+            Node<Data, Key>* temp = root->right;
+            delete root;
+            return temp;
+        } 
+        else if (root->right == nullptr) {
+            Node<Data, Key>* temp = root->left;
+            delete root;
+            return temp;
+        }
+
+        // node with two children: get the successor (smallest in the right subtree)
+        Key successorKey = successor(root->key);
+
+        // getting the node of the successor
+        Node<Data, Key>* temp = search(root, successorKey);
+
+        // copy the successor to this node
+        root->key = temp->key;
+        root->data = temp->data;
+
+        // delete the successor
+        root->right = remove_helper(root->right, temp->key);
+    }
+    return root;
 }
 
 /**
@@ -148,8 +203,10 @@ Data BST<Data, Key>::get(Key key) const {
  */
 template <typename Data, typename Key>
 void BST<Data, Key>::remove(Key key) {
-
+    root = remove_helper(root, key);
 }
+
+
 
 /**
  * max_data function
@@ -215,37 +272,30 @@ Key BST<Data, Key>::min_key() const {
  */
 template <typename Data, typename Key>
 Key BST<Data, Key>::successor(Key key) const {
-    //find the node with the given key
-    Node<Data, Key> *temp = root;
-    while(temp != nullptr && temp->key != key){
-        if(temp->key < key){
-            temp = temp->left;
-        }else{
-            temp = temp->right;
-        }
-    }
-    //if there is no node with that key, return default key
-    if(temp == nullptr){
+    Node<Data, Key>* node = search(root, key); //find the relevant node in the tree
+    if(node == nullptr || node->key == max_key()){ //if there is no successor, return default key
         return Key();
-    }else{
-        //if there is a right child, find the min key in that right subtree
-        if(temp->right != nullptr){
-            temp = temp->right;
-            while(temp->left != nullptr){
-                temp = temp->left;
-            }
-            return temp->key;
-        //otherwise, 
+    }
+    else if(node->right != NULL) { //if there is a right child, the successor is the min key in the right subtree
+        node = node->right;
+        while(node->left != nullptr){
+            node = node->left;
+        }
+        return node->key;
+    }else{ //if there's no right child, it must be an ancestor. Iterate up the tree until the node is found.
+        Node<Data, Key>* parent = node->parent;
+        while (parent != NULL && node == parent->right) {
+            node = parent;
+            parent = parent->parent;
+        }
+        if(parent == nullptr){
+            return root->key;
         }else{
-            Node<Data, Key> parent = temp->parent;
-            while(parent != nullptr && temp == parent->right){
-                temp = parent;
-                parent = temp->parent;
-            }
             return parent->key;
         }
     }
 }
+
 
 /**
  * in_order function
@@ -257,6 +307,18 @@ Key BST<Data, Key>::successor(Key key) const {
 template <typename Data, typename Key>
 string BST<Data, Key>::in_order() const {
     return in_order_tree_walk(root);
+}
+
+
+template <typename Data, typename Key>
+string BST<Data, Key>::in_order_tree_walk(Node<Data, Key> *x) const {
+    stringstream ss;
+    if (x != nullptr) {
+        ss << in_order_tree_walk(x->left);
+        ss << x->key << " ";
+        ss << in_order_tree_walk(x->right);
+    }
+    return ss.str();
 }
 
 /**
@@ -327,17 +389,6 @@ void BST<Data, Key>::trim(Key low, Key high) {
 template <typename Data, typename Key>
 string BST<Data, Key>::to_string() const {
     return insertion_order_tree_walk(root);
-}
-
-template <typename Data, typename Key>
-string BST<Data, Key>::in_order_tree_walk(Node<Data, Key> *x) const {
-    stringstream ss;
-    if (x != nullptr) {
-        ss << in_order_tree_walk(x->left);
-        ss << x->key << " ";
-        ss << in_order_tree_walk(x->right);
-    }
-    return ss.str();
 }
 
 /**
