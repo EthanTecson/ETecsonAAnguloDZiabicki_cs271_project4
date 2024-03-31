@@ -148,7 +148,7 @@ Data BST<Data, Key>::get(Key key) const {
  */
 template <typename Data, typename Key>
 void BST<Data, Key>::remove(Key key) {
-
+    //search()
 }
 
 /**
@@ -215,33 +215,25 @@ Key BST<Data, Key>::min_key() const {
  */
 template <typename Data, typename Key>
 Key BST<Data, Key>::successor(Key key) const {
-    //find the node with the given key
-    Node<Data, Key> *temp = root;
-    while(temp != nullptr && temp->key != key){
-        if(temp->key < key){
-            temp = temp->left;
-        }else{
-            temp = temp->right;
-        }
-    }
-    //if there is no node with that key, return default key
-    if(temp == nullptr){
+    Node<Data, Key>* node = search(root, key); //find the relevant node in the tree
+    if(node == nullptr || node->key == max_key()){ //if there is no successor, return default key
         return Key();
-    }else{
-        //if there is a right child, find the min key in that right subtree
-        if(temp->right != nullptr){
-            temp = temp->right;
-            while(temp->left != nullptr){
-                temp = temp->left;
-            }
-            return temp->key;
-        //otherwise, 
+    }
+    else if(node->right != NULL) { //if there is a right child, the successor is the min key in the right subtree
+        node = node->right;
+        while(node->left != nullptr){
+            node = node->left;
+        }
+        return node->key;
+    }else{ //if there's no right child, it must be an ancestor. Iterate up the tree until the node is found.
+        Node<Data, Key>* parent = node->parent;
+        while (parent != NULL && node == parent->right) {
+            node = parent;
+            parent = parent->parent;
+        }
+        if(parent == nullptr){
+            return root->key;
         }else{
-            Node<Data, Key> parent = temp->parent;
-            while(parent != nullptr && temp == parent->right){
-                temp = parent;
-                parent = temp->parent;
-            }
             return parent->key;
         }
     }

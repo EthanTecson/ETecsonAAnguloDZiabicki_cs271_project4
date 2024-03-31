@@ -6,6 +6,7 @@ all: test # runs everything at once
 
 test: test_bst_example.o
 		g++ -o test test_bst_example.o bst.cpp
+		rm test_bst_example.o
 
 test_bst_example.o: test_bst_example.cpp
 		g++ -c test_bst_example.cpp
