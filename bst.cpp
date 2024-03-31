@@ -260,16 +260,61 @@ string BST<Data, Key>::in_order() const {
 }
 
 /**
+ * trim helper function
+ *
+ *
+ *
+ *
+ */
+template <typename Data, typename Key>
+Node<Data, Key>* BST<Data, Key>::trim_helper(Node<Data, Key>* node, Key low, Key high) {
+    if (node == nullptr) {
+        return nullptr;
+    }
+
+    // trim the left and right subtrees
+    node->left = trim_helper(node->left, low, high);
+    node->right = trim_helper(node->right, low, high);
+
+    // Checking to see if its in range of our bounds
+    if (node->key < low) {
+        // Node's key is too low, replace it with its right subtree because its within our bounds
+        Node<Data, Key>* rightSubtree = node->right;
+
+        // deleting the node since its not in our bounds
+        delete node;
+
+        // returning the rest of the right subtree to repeat the proces
+        return rightSubtree;
+
+    // Checking to see now if our key is greater than our bounds
+    } else if (node->key > high) {
+        // Node's key is too high, replace it with its left subtree because the left is always the smallest than our bounds
+        Node<Data, Key>* leftSubtree = node->left;
+
+        // Deleting node because its greater than our bounds
+        delete node;
+
+        // returning the rest of the left subtree to repeat the process
+        return leftSubtree;
+    } else {
+        // Node's key is in range, keep the node
+        return node;
+    }
+}
+
+/**
  * trim function
  *
  *
  *
  *
  */
-// template <typename Data, typename Key>
-// void BST<Data, Key>::trim(Key key1, Key key2) {
-    
-// }
+template <typename Data, typename Key>
+void BST<Data, Key>::trim(Key low, Key high) {
+    root = trim_helper(root, low, high);
+}
+
 
 /**
  * to_string function
@@ -380,6 +425,13 @@ string BST<Data, Key>::insertion_order_tree_walk(Node<Data, Key> *root) const {
     return result;
 }
 
+/**
+ * search function
+ *
+ *
+ *
+ *
+ */
 template <typename Data, typename Key>
 Node<Data, Key>* BST<Data, Key>::search(Node<Data, Key>* root, Key key) const {
 
