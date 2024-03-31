@@ -314,6 +314,7 @@ template <typename Data, typename Key>
 void BST<Data, Key>::trim(Key low, Key high) {
     root = trim_helper(root, low, high);
 }
+=======
 
 
 /**
@@ -447,4 +448,5 @@ Node<Data, Key>* BST<Data, Key>::search(Node<Data, Key>* root, Key key) const {
 
     // If the key is less than the root's key, search the left subtree
     return search(root->left, key);
+}
 }
