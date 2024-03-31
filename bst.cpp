@@ -160,7 +160,7 @@ void BST<Data, Key>::remove(Key key) {
  */
 template <typename Data, typename Key> 
 Data BST<Data, Key>::max_data() const {
-    return max_key()->data;
+    return search(root, max_key())->data;
 }
 /**
  * max_key function
@@ -187,7 +187,7 @@ Key BST<Data, Key>::max_key() const {
  */
 template <typename Data, typename Key> 
 Data BST<Data, Key>::min_data() const {
-    return min_key() -> data;
+    return search(root, min_key())->data;
 }
 
 /**
@@ -378,4 +378,21 @@ string BST<Data, Key>::insertion_order_tree_walk(Node<Data, Key> *root) const {
     // Removing the end of the string which would be an extra " "
     result.pop_back(); 
     return result;
+}
+
+template <typename Data, typename Key>
+Node<Data, Key>* BST<Data, Key>::search(Node<Data, Key>* root, Key key) const {
+
+    // If the tree is empty or the key is at the root, return the root
+    if (root == nullptr || root->key == key) {
+        return root;
+    }
+
+    // If the key is greater than the root's key, search the right subtree
+    if (root->key < key) {
+        return search(root->right, key);
+    }
+
+    // If the key is less than the root's key, search the left subtree
+    return search(root->left, key);
 }
