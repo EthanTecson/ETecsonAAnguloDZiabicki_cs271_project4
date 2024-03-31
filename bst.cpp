@@ -2,6 +2,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <queue>
 using namespace std;
 
 //===================================
@@ -116,6 +117,8 @@ void BST<Data, Key>::insert(Data data, Key key) {
     }
 }
 
+
+
 /**
  * get function
  *
@@ -125,7 +128,7 @@ void BST<Data, Key>::insert(Data data, Key key) {
  */
 template <typename Data, typename Key>
 Data BST<Data, Key>::get(Key key) const {
-    Node *temp = root;
+    Node<Data, Key> *temp = root;
     while(temp != nullptr && temp->key != key){
         if(key < temp){
             temp = temp->left;
@@ -155,11 +158,10 @@ void BST<Data, Key>::remove(Key key) {
  *
  *
  */
-template <typename Data, typename Key>
+template <typename Data, typename Key> 
 Data BST<Data, Key>::max_data() const {
-    
+    return search(root, max_key())->data;
 }
-
 /**
  * max_key function
  *
@@ -183,9 +185,9 @@ Key BST<Data, Key>::max_key() const {
  *
  *
  */
-template <typename Data, typename Key>
+template <typename Data, typename Key> 
 Data BST<Data, Key>::min_data() const {
-    
+    return search(root, min_key())->data;
 }
 
 /**
@@ -258,16 +260,62 @@ string BST<Data, Key>::in_order() const {
 }
 
 /**
+ * trim helper function
+ *
+ *
+ *
+ *
+ */
+template <typename Data, typename Key>
+Node<Data, Key>* BST<Data, Key>::trim_helper(Node<Data, Key>* node, Key low, Key high) {
+    if (node == nullptr) {
+        return nullptr;
+    }
+
+    // trim the left and right subtrees
+    node->left = trim_helper(node->left, low, high);
+    node->right = trim_helper(node->right, low, high);
+
+    // Checking to see if its in range of our bounds
+    if (node->key < low) {
+        // Node's key is too low, replace it with its right subtree because its within our bounds
+        Node<Data, Key>* rightSubtree = node->right;
+
+        // deleting the node since its not in our bounds
+        delete node;
+
+        // returning the rest of the right subtree to repeat the proces
+        return rightSubtree;
+
+    // Checking to see now if our key is greater than our bounds
+    } else if (node->key > high) {
+        // Node's key is too high, replace it with its left subtree because the left is always the smallest than our bounds
+        Node<Data, Key>* leftSubtree = node->left;
+
+        // Deleting node because its greater than our bounds
+        delete node;
+
+        // returning the rest of the left subtree to repeat the process
+        return leftSubtree;
+    } else {
+        // Node's key is in range, keep the node
+        return node;
+    }
+}
+
+/**
  * trim function
  *
  *
  *
  *
  */
-// template <typename Data, typename Key>
-// void BST<Data, Key>::trim(Key key1, Key key2) {
-    
-// }
+template <typename Data, typename Key>
+void BST<Data, Key>::trim(Key low, Key high) {
+    root = trim_helper(root, low, high);
+}
+=======
+
 
 /**
  * to_string function
@@ -277,37 +325,10 @@ string BST<Data, Key>::in_order() const {
  *
  */
 
-// template <typename Data, typename Key>
-// string BST<Data, Key>::to_string() const {
-
-//     // stringstream ss;
-
-//     // if root == nullptr; 
-//     // {
-//     //     return ss.to_str();
-//     // }
-
-//     // ss << root->key << " ";
-
-//     // Node *curr = root;
-
-//     // while curr != nullptr{ // Get to smallest key
-//     //     if (curr->left == nullptr){
-
-//     //     }
-//     //     ptr = curr->left;
-//     // } 
-//     // ss << curr->key;
-// }
-
-// template <typename Data, typename Key>
-// string BST<Data, Key>::in_order_tree_walk(Node<Data, Key> *x) const{
-//      if (x != nullptr){
-//         in_order_tree_walk(x->left);
-//         cout << x->data;
-//         in_order_tree_walk(x->right);
-//      }
-// }
+template <typename Data, typename Key>
+string BST<Data, Key>::to_string() const {
+    return insertion_order_tree_walk(root);
+}
 
 template <typename Data, typename Key>
 string BST<Data, Key>::in_order_tree_walk(Node<Data, Key> *x) const {
@@ -318,4 +339,114 @@ string BST<Data, Key>::in_order_tree_walk(Node<Data, Key> *x) const {
         ss << in_order_tree_walk(x->right);
     }
     return ss.str();
+}
+
+/**
+ * empty function
+ *
+ *
+ *
+ *
+ */
+template <typename Data, typename Key>
+bool BST<Data, Key>::empty() const{
+    if(root == nullptr){
+        return true;
+    }
+    return false;
+}
+
+/**
+ * operator= function
+ *
+ *
+ *
+ *
+ */
+template <typename Data, typename Key>
+Node<Data, Key>& Node<Data, Key>::operator=(const Node<Data, Key>& Node2) {
+    if (this != &Node2) {
+        data = Node2->data;
+        key = Node2->key;
+
+        // Assuming that left and right are pointers to dynamically allocated memory
+        delete left;
+        delete right;
+        left = Node2 -> left ? new Node<Data, Key>(*Node2->left) : nullptr;
+        right = Node2 -> right ? new Node<Data, Key>(*Node2->right) : nullptr;
+    }
+    return *this;
+}
+
+/**
+ * to_string function
+ *
+ *
+ *
+ *
+ */
+template <typename Data, typename Key>
+string BST<Data, Key>::insertion_order_tree_walk(Node<Data, Key> *root) const {
+    stringstream ss;
+
+    // If the root is empty return nothing
+    if(root == nullptr){
+        return "";
+    }
+
+    // Creating a Queue
+    queue<Node<Data, Key>*> q;
+    q.push(root);
+
+
+    while(!q.empty()){
+
+        // Getting the node in the front of the queue
+        Node<Data, Key>* x = q.front();
+
+        // Then we remove it
+        q.pop();
+
+        // Add it to the ss
+        ss << x->key << " ";
+
+        // Repeate the proccess from left -> right depending if there empty or not
+        if(x->left != nullptr){
+            q.push(x->left);
+        }
+        if(x->right != nullptr){
+            q.push(x->right);
+        }
+    }
+
+    string result = ss.str();
+
+    // Removing the end of the string which would be an extra " "
+    result.pop_back(); 
+    return result;
+}
+
+/**
+ * search function
+ *
+ *
+ *
+ *
+ */
+template <typename Data, typename Key>
+Node<Data, Key>* BST<Data, Key>::search(Node<Data, Key>* root, Key key) const {
+
+    // If the tree is empty or the key is at the root, return the root
+    if (root == nullptr || root->key == key) {
+        return root;
+    }
+
+    // If the key is greater than the root's key, search the right subtree
+    if (root->key < key) {
+        return search(root->right, key);
+    }
+
+    // If the key is less than the root's key, search the left subtree
+    return search(root->left, key);
+}
 }
