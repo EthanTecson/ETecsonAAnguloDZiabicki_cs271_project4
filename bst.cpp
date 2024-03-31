@@ -130,13 +130,17 @@ template <typename Data, typename Key>
 Data BST<Data, Key>::get(Key key) const {
     Node<Data, Key> *temp = root;
     while(temp != nullptr && temp->key != key){
-        if(key < temp){
+        if(key < temp->key){
             temp = temp->left;
         }else{
             temp = temp->right;
         }
     }
-    return temp->data;
+    if(temp == nullptr){
+        return Data();
+    }else{
+        return temp->data;
+    }
 }
 
 /**
