@@ -8,6 +8,19 @@ using namespace std;
 //===================================
 // Node Class
 //===================================
+
+/**
+ * @brief Empty Constructor for Node Class
+ *
+ * Creates a Node Object with no values for key or data
+ *
+ * @param none
+ *
+ * @note Pre-Condition: none
+ * @note Post-Condition: Creates a Node object
+ *
+ * @returns none
+ */
 template <typename Data, typename Key>
 Node<Data,Key>::Node(){
     left = nullptr;
@@ -15,7 +28,20 @@ Node<Data,Key>::Node(){
     parent = nullptr;
 }
 
-
+/**
+ * @brief Constructor with values for Node Class
+ *
+ * Creates a Node Object with the data and key attributes equal 
+ * to the data and key given in the argument
+ *
+ * @param d - data for node to be initiated with
+ * @param k - key for node to be initiated with
+ *
+ * @note Pre-Condition: none
+ * @note Post-Condition: Creates a Node object 
+ *
+ * @returns none
+ */
 template <typename Data, typename Key>
 Node<Data,Key>::Node(Data d, Key k){
 
@@ -27,20 +53,36 @@ Node<Data,Key>::Node(Data d, Key k){
     parent = nullptr;
 }
 
+
+/**
+ * @brief Deconstructor for Node Class
+ *
+ * Deallocates memory created for node objects
+ *
+ *@param none
+ * 
+ * @note Pre-Condition: none
+ * @note Post-Condition:a All node objects deallocated
+ *
+ * @returns none
+ */
 template <typename Data, typename Key>
 Node<Data, Key>::~Node() {
-    // Destructor implementation goes here
-    // For example, you can delete any dynamically allocated memory
-    // or perform any necessary cleanup.
+    // Nothing needed
 }
 
 
 /**
- * Delete Node function
+ * @brief Helper function for deleting Node objects
  *
+ * Deallocates memory created for node objects in BST class
  *
+ *@param node - node to be deleted
+ * 
+ * @note Pre-Condition: There exist a node object to be deleted
+ * @note Post-Condition:a All node objects deallocated
  *
- *
+ * @returns none
  */
  template <typename Data, typename Key>
  void Node<Data, Key>::deleteNode(Node<Data, Key>* node){ //Havent tested since we have no insert func
@@ -59,11 +101,16 @@ Node<Data, Key>::~Node() {
 // BST Class
 //===================================
 /**
- * BST constructor
+ * @brief  Constructor for BST Class
  *
+ * Initiates a BST class object
+ * 
+ * @param - none
+ * 
+ * @note Pre-Condition: none
+ * @note Post-Condition: BST object initiated
  *
- *
- *
+ * @returns none
  */
 template <typename Data, typename Key>
 BST<Data, Key>::BST() {
@@ -73,11 +120,16 @@ BST<Data, Key>::BST() {
 
 
 /**
- * BST deconstructor
+ * @brief  Deconstructor for BST Class
  *
+ * Deallocates memory for all nodes within BST
+ * 
+ * @param - none
+ * 
+ * @note Pre-Condition: There exist a BST to be deallocated
+ * @note Post-Condition: All nodes within BST are deallocated
  *
- *
- *
+ * @returns none
  */
 template <typename Data, typename Key>
 BST<Data, Key>::~BST() {
@@ -88,17 +140,25 @@ BST<Data, Key>::~BST() {
 
 
 /**
- * insert function
+ * @brief  insert for BST Class
  *
+ * Inserts a node into BST with specificed data and key
+ * 
+ * @param data - data of node that will be inserted
+ * @param key - key of node that will be inserted
+ * 
+ * @note Pre-Condition: There exist a BST for node to be inserted
+ * @note Post-Condition: BST has the inserted node
  *
- *
- *
+ * @returns none
  */
 template <typename Data, typename Key>
 void BST<Data, Key>::insert(Data data, Key key) {
+    // If tree is empty
     if(root == nullptr){
         root = new Node<Data, Key>(data, key);
     }else{
+        // Find correct place for new node to be inserted
         Node<Data, Key> *temp = root;
         Node<Data, Key> *parent = nullptr;
         while(temp != nullptr){
@@ -109,6 +169,7 @@ void BST<Data, Key>::insert(Data data, Key key) {
                 temp = temp->right;
             }
         }
+        // Correctly set parent of new node
         if(key < parent->key){
             parent->left = new Node<Data, Key>(data, key);
         }else{
@@ -120,15 +181,21 @@ void BST<Data, Key>::insert(Data data, Key key) {
 
 
 /**
- * get function
+ * @brief get for BST Class
  *
+ * gets data associated with given key
+ * 
+ * @param key - key of the node whose data will be returned
+ * 
+ * @note Pre-Condition: There exist a BST 
+ * @note Post-Condition: none
  *
- *
- *
+ * @returns data corresponding to given key
  */
 template <typename Data, typename Key>
 Data BST<Data, Key>::get(Key key) const {
     Node<Data, Key> *temp = root;
+    // Correctly search for key
     while(temp != nullptr && temp->key != key){
         if(key < temp->key){
             temp = temp->left;
@@ -136,6 +203,7 @@ Data BST<Data, Key>::get(Key key) const {
             temp = temp->right;
         }
     }
+    // If key is not in tree
     if(temp == nullptr){
         return Data();
     }else{
@@ -144,11 +212,17 @@ Data BST<Data, Key>::get(Key key) const {
 }
 
 /**
- * remove helper function
+ * @brief remove_helper function for BST Class
  *
+ * Helps remove function for BST class
+ * 
+ * @param root - root of BST
+ * @param key - key of node to be removed
+ * 
+ * @note Pre-Condition: There exist a BST 
+ * @note Post-Condition: A BST without the node of the corresponding key, if no node with corresponding key was found, then none.
  *
- *
- *
+ * @returns data corresponding to given key
  */
 template <typename Data, typename Key>
 Node<Data, Key>* BST<Data, Key>::remove_helper(Node<Data, Key>* root, Key key) {
@@ -195,11 +269,16 @@ Node<Data, Key>* BST<Data, Key>::remove_helper(Node<Data, Key>* root, Key key) {
 }
 
 /**
- * remove function
+ * @brief remove function for BST Class
  *
+ * Removes node within BST
+ * 
+ * @param key - key of node to be removed
  *
+ * @note Pre-Condition: There exist a BST 
+ * @note Post-Condition: A BST without the node of the corresponding key, if no node with corresponding key was found, then none.
  *
- *
+ * @returns none
  */
 template <typename Data, typename Key>
 void BST<Data, Key>::remove(Key key) {
@@ -207,26 +286,38 @@ void BST<Data, Key>::remove(Key key) {
 }
 
 /**
- * max_data function
+ * @brief max_data function for BST Class
  *
+ * returns data associated with the max key in the BST
+ * 
+ * @param none
+ * 
+ * @note Pre-Condition: There exist a BST 
+ * @note Post-Condition: none
  *
- *
- *
+ * @returns data associated with the max key in the BST by using search() function to get node with max key
  */
 template <typename Data, typename Key> 
 Data BST<Data, Key>::max_data() const {
     return search(root, max_key())->data;
 }
+
 /**
- * max_key function
+ * @brief max_key function for BST Class
  *
+ * returns the max key within the BST
+ * 
+ * @param none
  *
+ * @note Pre-Condition: There exist a BST 
+ * @note Post-Condition: none
  *
- *
+ * @returns max key within the BST
  */
 template <typename Data, typename Key>
 Key BST<Data, Key>::max_key() const {
     Node<Data, Key> *temp = root;
+    // Find right most node
     while(temp->right != nullptr){
         temp = temp->right;
     }
@@ -234,11 +325,16 @@ Key BST<Data, Key>::max_key() const {
 }
 
 /**
- * min_data function
+ * @brief min_data function for BST Class
  *
+ * returns data associated with the min key in the BST
+ * 
+ * @param none
+ * 
+ * @note Pre-Condition: There exist a BST 
+ * @note Post-Condition: none
  *
- *
- *
+ * @returns data associated with the min key in the BST by using search() function to get node with min key
  */
 template <typename Data, typename Key> 
 Data BST<Data, Key>::min_data() const {
@@ -246,15 +342,21 @@ Data BST<Data, Key>::min_data() const {
 }
 
 /**
- * min_key function
+ * @brief min_key function for BST Class
  *
+ * returns the min key within the BST
+ * 
+ * @param none
  *
+ * @note Pre-Condition: There exist a BST 
+ * @note Post-Condition: none
  *
- *
+ * @returns min key within the BST
  */
 template <typename Data, typename Key>
 Key BST<Data, Key>::min_key() const {
     Node<Data, Key> *temp = root;
+    // Find left most node
     while(temp->left != nullptr){
         temp = temp->left;
     }
@@ -262,11 +364,16 @@ Key BST<Data, Key>::min_key() const {
 }
 
 /**
- * successor function
+ * @brief successor function for BST Class
  *
+ * returns the successor key in the BST tree for the given key k
+ * 
+ * @param key - key of whose successor we are trying to find
+ * 
+ * @note Pre-Condition: There exist a BST 
+ * @note Post-Condition: none
  *
- *
- *
+ * @returns successor of given key k
  */
 template <typename Data, typename Key>
 Key BST<Data, Key>::successor(Key key) const {
@@ -286,20 +393,28 @@ Key BST<Data, Key>::successor(Key key) const {
             node = parent;
             parent = parent->parent;
         }
+        // Successor is root
         if(parent == nullptr){
             return root->key;
+        // Successor was found as a left-child
         }else{
             return parent->key;
         }
     }
 }
 
+
 /**
- * in_order function
+ * @brief in_order function for BST Class
  *
+ * returns string of keys within BST in ascneidng order
+ * 
+ * @param key - none
+ * 
+ * @note Pre-Condition: There exist a BST 
+ * @note Post-Condition: none
  *
- *
- *
+ * @returns string of keys within BST in ascneding order
  */
 template <typename Data, typename Key>
 string BST<Data, Key>::in_order() const {
@@ -308,11 +423,41 @@ string BST<Data, Key>::in_order() const {
 }
 
 /**
- * trim helper function
+ * @brief Helper function for in_order function for BST class
  *
+ * Returns a string of keys in ascending order within the BST
+ * 
+ * @param none
  *
+ * @note Pre-Condition: There exists a BST to be walked.
+ * @note Post-Condition: none
+ * 
+ * @returns - string of keys in ascending order within the BST
+ */
+template <typename Data, typename Key>
+string BST<Data, Key>::in_order_tree_walk(Node<Data, Key> *x) const {
+    stringstream ss;
+    if (x != nullptr) {
+        ss << in_order_tree_walk(x->left);
+        ss << x->key << " ";
+        ss << in_order_tree_walk(x->right);
+    }
+    return ss.str();
+}
+
+/**
+ * @brief trim_helper function for BST Class
  *
+ * Creates subtree whose keys are within the range of low and high
+ * 
+ * @param node - node to be checked if within range
+ * @param low - minimum value range for new subtree
+ * @param high - maximum value range for new subtree
  *
+ * @note Pre-Condition: There exists a BST that has a range of keys.
+ * @note Post-Condition: The same BST whose keys are within the range of low and high.
+ *
+ * @returns Pointer to the root of the trimmed subtree, which contains only nodes whose keys are within the specified range.
  */
 template <typename Data, typename Key>
 Node<Data, Key>* BST<Data, Key>::trim_helper(Node<Data, Key>* node, Key low, Key high) {
@@ -352,11 +497,17 @@ Node<Data, Key>* BST<Data, Key>::trim_helper(Node<Data, Key>* node, Key low, Key
 }
 
 /**
- * trim function
+ * @brief trim function for BST Class
  *
+ * Trims the BST to contain only nodes with keys within the specified range
+ * 
+ * @param low - The minimum value range for the trimmed BST
+ * @param high - The maximum value range for the trimmed BST
  *
- *
- *
+ * @note Pre-Condition: There exists a BST that has a range of keys.
+ * @note Post-Condition: The BST contains only nodes whose keys are within the range [low, high].
+ * 
+ * @returns none
  */
 template <typename Data, typename Key>
 void BST<Data, Key>::trim(Key low, Key high) {
@@ -365,35 +516,33 @@ void BST<Data, Key>::trim(Key low, Key high) {
 
 
 /**
- * to_string function
+ * @brief to_string() function for BST class
  *
+ * Returns a string of keys within the BST starting at the root
+ * 
+ * @param none
  *
- *
- *
+ * @note Pre-Condition: There exists a BST
+ * @note Post-Condition: none
+ * 
+ * @returns string of keys within the BST starting at the root using the insertion_order_tree_walk helper function
  */
-
 template <typename Data, typename Key>
 string BST<Data, Key>::to_string() const {
     return insertion_order_tree_walk(root);
 }
 
-template <typename Data, typename Key>
-string BST<Data, Key>::in_order_tree_walk(Node<Data, Key> *x) const {
-    stringstream ss;
-    if (x != nullptr) {
-        ss << in_order_tree_walk(x->left);
-        ss << x->key << " ";
-        ss << in_order_tree_walk(x->right);
-    }
-    return ss.str();
-}
-
 /**
- * empty function
+ * @brief empty function for BST class
  *
+ * Returns true or false based on whether the given BST is empty or not
+ * 
+ * @param none
  *
- *
- *
+ * @note Pre-Condition: There exists a BST 
+ * @note Post-Condition: none
+ * 
+ * @returns true or false
  */
 template <typename Data, typename Key>
 bool BST<Data, Key>::empty() const{
@@ -426,11 +575,16 @@ Node<Data, Key>& Node<Data, Key>::operator=(const Node<Data, Key>& Node2) {
 }
 
 /**
- * to_string function
+ * @brief helper function for to_string function for BST class
  *
+ * Returns a string of keys within the BST starting at the root
+ * 
+ * @param root - root of BST tree to be walked
  *
- *
- *
+ * @note Pre-Condition: The root parameter points to the root of a valid BST. The BST may be empty.
+ * @note Post-Condition: none
+ * 
+ * @returns string of keys within the BST starting at the root using the insertion_order_tree_walk helper function
  */
 template <typename Data, typename Key>
 string BST<Data, Key>::insertion_order_tree_walk(Node<Data, Key> *root) const {
@@ -474,11 +628,18 @@ string BST<Data, Key>::insertion_order_tree_walk(Node<Data, Key> *root) const {
 }
 
 /**
- * search function
+ * @brief Helper search function for many functions for BST class
  *
+ * This function searches for a node with the specified key in the BST starting from the given root node.
+ * 
+ * @param root - The root of the subtree to search
+ * @param key - The key to search for in the BST
  *
- *
- *
+ * @note Pre-Condition: The root parameter points to the root of a valid subtree in the BST. The BST may be empty.
+ * @note Post-Condition: If a node with the specified key is found, a pointer to that node is returned. 
+ *                      If the key is not found in the subtree, nullptr is returned.
+ * 
+ * @returns A pointer to the node with the specified key if found; otherwise, nullptr.
  */
 template <typename Data, typename Key>
 Node<Data, Key>* BST<Data, Key>::search(Node<Data, Key>* root, Key key) const {
