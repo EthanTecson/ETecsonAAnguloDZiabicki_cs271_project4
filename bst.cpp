@@ -657,3 +657,19 @@ Node<Data, Key>* BST<Data, Key>::search(Node<Data, Key>* root, Key key) const {
     // If the key is less than the root's key, search the left subtree
     return search(root->left, key);
 }
+
+Node<Data, Key>* searchData(Node<Data, Key>* root, Data data) const {
+    if(root == nullptr || root->data == data) {
+        return data;
+    }
+    else {
+        Node<Data, Key>* leftSearch = searchData(root->left, data);
+        Node<Data, Key>* rightSearch = searchData(root->right, data);
+        if(leftSearch != nullptr) {
+            return leftSearch;
+        }
+        else {
+            return rightSearch;
+        }
+    }
+}

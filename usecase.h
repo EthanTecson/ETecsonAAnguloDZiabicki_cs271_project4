@@ -10,6 +10,9 @@ BinarySearchTree<Data, Key>* create_bst(string fname); //fname is the CSV file n
 
 // Convert binary to hexadecimal using BST
 template <typename Data, typename Key>
-string convert(BinarySearchTree<D, K>* bst, std::string bin);
+string convert(BinarySearchTree<D, K>* bst, string bin);
+
+
+string bin_to_hex(string bin_str) const;
 
 #endif // USECASE_H
