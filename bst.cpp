@@ -316,6 +316,11 @@ Data BST<Data, Key>::max_data() const {
  */
 template <typename Data, typename Key>
 Key BST<Data, Key>::max_key() const {
+
+    if (root = nullptr){
+        return Key();
+    }
+
     Node<Data, Key> *temp = root;
     // Find right most node
     while(temp->right != nullptr){
@@ -355,6 +360,11 @@ Data BST<Data, Key>::min_data() const {
  */
 template <typename Data, typename Key>
 Key BST<Data, Key>::min_key() const {
+
+    if (root = nullptr){
+        return Key();
+    }
+
     Node<Data, Key> *temp = root;
     // Find left most node
     while(temp->left != nullptr){
@@ -658,18 +668,18 @@ Node<Data, Key>* BST<Data, Key>::search(Node<Data, Key>* root, Key key) const {
     return search(root->left, key);
 }
 
-Node<Data, Key>* searchData(Node<Data, Key>* root, Data data) const {
-    if(root == nullptr || root->data == data) {
-        return data;
-    }
-    else {
-        Node<Data, Key>* leftSearch = searchData(root->left, data);
-        Node<Data, Key>* rightSearch = searchData(root->right, data);
-        if(leftSearch != nullptr) {
-            return leftSearch;
-        }
-        else {
-            return rightSearch;
-        }
-    }
-}
+// Node<Data, Key>* searchData(Node<Data, Key>* root, Data data) const {
+//     if(root == nullptr || root->data == data) {
+//         return data;
+//     }
+//     else {
+//         Node<Data, Key>* leftSearch = searchData(root->left, data);
+//         Node<Data, Key>* rightSearch = searchData(root->right, data);
+//         if(leftSearch != nullptr) {
+//             return leftSearch;
+//         }
+//         else {
+//             return rightSearch;
+//         }
+//     }
+// }
