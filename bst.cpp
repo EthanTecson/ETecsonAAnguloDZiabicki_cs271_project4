@@ -317,7 +317,7 @@ Data BST<Data, Key>::max_data() const {
 template <typename Data, typename Key>
 Key BST<Data, Key>::max_key() const {
 
-    if (root = nullptr){
+    if (root == nullptr){
         return Key();
     }
 
@@ -361,7 +361,7 @@ Data BST<Data, Key>::min_data() const {
 template <typename Data, typename Key>
 Key BST<Data, Key>::min_key() const {
 
-    if (root = nullptr){
+    if (root == nullptr){
         return Key();
     }
 
