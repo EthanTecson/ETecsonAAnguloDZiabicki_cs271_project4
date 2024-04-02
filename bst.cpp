@@ -299,6 +299,9 @@ void BST<Data, Key>::remove(Key key) {
  */
 template <typename Data, typename Key> 
 Data BST<Data, Key>::max_data() const {
+    if (root == nullptr){
+        return Data();
+    }
     return search(root, max_key())->data;
 }
 
@@ -343,6 +346,9 @@ Key BST<Data, Key>::max_key() const {
  */
 template <typename Data, typename Key> 
 Data BST<Data, Key>::min_data() const {
+    if (root == nullptr){
+        return Data();
+    }
     return search(root, min_key())->data;
 }
 
