@@ -12,7 +12,7 @@
 
 using namespace std;
 
-// Empty Testing
+// empty Testing
 /**
  * case 1: Test an empty BST
  * case 2: Insert into BST, test empty
@@ -79,7 +79,7 @@ void test_empty() {
 }
 
 
-// Insert Testing
+// insert Testing
 /**
  * case 1: Insert into empty BST
  * case 2: Insert into already made BST
@@ -182,7 +182,7 @@ void test_insert() {
     }
 }
 
-// Insert Testing
+// get Testing
 /**
  * case 1: Test an empty BST
  * case 2: Insert into BST, test get
@@ -267,7 +267,7 @@ void test_get() {
 }
 
 
-// Remove Testing
+// remove Testing
 /**
  * case 1: Test an empty BST
  * case 2: Test on balanced bst
@@ -381,16 +381,24 @@ void test_remove() {
     }
 }
 
-// max_data Testing
-// 1. max_data from empty tree
-// 2. Insert into BST, then test remove
-// 3. DIfferent data types and data/key values
-//   a. int data and int key
-//   b. float data and float key
-//   c. string data and string key
-//   d. negative data and negative key
+// max_data testing
+/**
+ * case 1: max_data from empty tree
+ * case 2: Test on balanced bst
+ * case 3: Test after remove
+ * case 4: Test on int
+ * case 5: Test on negative values
+ * case 6: Test on string data
+ */
 void test_max_data() {
     try {
+        // case 1:
+        BST<string, int> empty_bst;
+        if(empty_bst.max_data() != ""){
+            cout << "Incorrect result of max_data. Expected 0 but got : " << empty_bst.max_data() << endl;
+        }
+
+        // case 2:
         int vals[10] = {5, 2, 7, 1, 3, 4, 6, 9, 8, 10};
         BST<string, int> balanced_bst;
         for(int i = 0; i < 10; i++) {
@@ -400,21 +408,83 @@ void test_max_data() {
         if(max_str != "10 data") {
             cout << "Incorrect result of max_data. Expected \"10 data\" but got : " << max_str << endl;
         }
+
+        // case 3:
+        balanced_bst.remove(10);
+        if (balanced_bst.max_data() != "9 data") {
+            cout << "Incorrect result of max_data. Expected \"9 data\" but got : " << balanced_bst.max_data() << endl;
+        }
+
+        // case 4:
+        BST<int, int> int_bst;
+        if(int_bst.max_data() != 0){
+            cout << "Incorrect result of max_data. Expected 0 but got : " << int_bst.max_data() << endl;
+        }
+
+        int int_vals[10] = {5, 2, 7, 1, 3, 4, 6, 9, 8, 10};
+        for(int i = 0; i < 10; i++) {
+            int_bst.insert(i + 1, int_vals[i]);
+        }
+
+        if(int_bst.max_data() != 10){
+            cout << "Incorrect result of max_data. Expected 10 but got : " << int_bst.max_data() << endl; 
+        }
+
+        // case 5:
+        int negative_vals[10] = {-5, -2, -7, -1, -3, -4, -6, -9, -8, -10};
+        BST<int, int> negative_balanced_bst;
+        for(int i = 0; i < 10; i++) {
+            negative_balanced_bst.insert(negative_vals[i], negative_vals[i]);
+        }
+
+        if(negative_balanced_bst.max_data() != -1){
+            cout << "Incorrect result of max_data. Expected -1 but got : " << negative_balanced_bst.max_data() << endl;
+        }
+
+        // case 6:
+        BST<string, string> string_bst;
+
+        if(string_bst.max_data() != ""){
+            cout << "Incorrect result of max_key. Expected '' but got : " << string_bst.max_key() << endl;
+        }
+
+        string_bst.insert("1", "e"); 
+        string_bst.insert("2", "b");
+        string_bst.insert("3", "g");
+        string_bst.insert("4", "a");
+        string_bst.insert("5", "c");
+        string_bst.insert("6", "d");
+        string_bst.insert("7", "f");
+        string_bst.insert("8", "i");
+        string_bst.insert("9", "h");
+        string_bst.insert("10", "j"); 
+
+        if(string_bst.max_data() != "10"){
+            cout << "Incorrect result of max_data. Expected '10' but got : " << string_bst.max_data() << endl;
+        }
+
     } catch(exception& e) {
         cerr << "Error in determining data of max node in bst : " << e.what() << endl;
     }
 }
 
-// max_key Testing
-// 1. max_key from empty tree
-// 2. Insert into BST, then test remove
-// 3. DIfferent data types and data/key values
-//   a. int data and int key
-//   b. float data and float key
-//   c. string data and string key
-//   d. negative data and negative key
+// max_key testing
+/**
+ * case 1: max_key from empty tree
+ * case 2: Test on balanced bst
+ * case 3: Test after remove
+ * case 4: Test on negative values
+ * case 5: Test on string keys
+ */
 void test_max_key() {
     try {
+        // case 1:
+        BST<string, int> empty_bst;
+        if(empty_bst.max_key() != 0){
+            cout << "Incorrect result of max_key. Expected 0 but got : " << empty_bst.max_key() << endl;
+        }
+
+        // case 2:
         int vals[10] = {5, 2, 7, 1, 3, 4, 6, 9, 8, 10};
         BST<string, int> balanced_bst;
         for(int i = 0; i < 10; i++) {
@@ -424,21 +494,73 @@ void test_max_key() {
         if(max_k != 10) {
             cout << "Incorrect result of max_key. Expected 10 but got : " << max_k << endl;
         }
+
+        // case 3:
+        balanced_bst.remove(8);
+        if (balanced_bst.max_key() != 10){
+            cout << "Incorrect result of max_key. Expected 10 but got : " << balanced_bst.max_key() << endl;
+        }
+        balanced_bst.remove(10);
+        if (balanced_bst.max_key() != 9){
+            cout << "Incorrect result of max_key. Expected 9 but got : " << balanced_bst.max_key() << endl;
+        }
+
+        // case 4:
+        int negative_vals[10] = {-5, -2, -7, -1, -3, -4, -6, -9, -8, -10};
+        BST<string, int> negative_balanced_bst;
+        for(int i = 0; i < 10; i++) {
+            negative_balanced_bst.insert(to_string(negative_vals[i]) + " data", negative_vals[i]);
+        }
+
+        if(negative_balanced_bst.max_key() != -1){
+            cout << "Incorrect result of max_key. Expected -1 but got : " << negative_balanced_bst.max_key() << endl;
+        }
+
+        // case 5:
+        BST<string, string> string_bst;
+
+        if(string_bst.max_key() != ""){
+            cout << "Incorrect result of max_key. Expected '' but got : " << string_bst.max_key() << endl;
+        }
+
+        string_bst.insert("some data", "e"); 
+        string_bst.insert("some data", "b");
+        string_bst.insert("some data", "g");
+        string_bst.insert("some data", "a");
+        string_bst.insert("some data", "c");
+        string_bst.insert("some data", "d");
+        string_bst.insert("some data", "f");
+        string_bst.insert("some data", "i");
+        string_bst.insert("some data", "h");
+        string_bst.insert("some data", "j"); 
+
+        if(string_bst.max_key() != "j"){
+            cout << "Incorrect result of max_key. Expected k but got : " << string_bst.max_key() << endl;
+        }
+
     } catch(exception& e) {
         cerr << "Error in determining key of max node in bst : " << e.what() << endl;
     }
 }
 
-// min_data Testing
-// 1. min_data from empty tree
-// 2. Insert into BST, then test remove
-// 3. DIfferent data types and data/key values
-//   a. int data and int key
-//   b. float data and float key
-//   c. string data and string key
-//   d. negative data and negative key
+// min_data testing
+/**
+ * case 1: min_data from empty tree
+ * case 2: Test on balanced bst
+ * case 3: Test after remove
+ * case 4: Test on int
+ * case 5: Test on negative values
+ * case 6: Test on string data
+ */
 void test_min_data() {
     try {
+        // case 1:
+        BST<string, int> empty_bst;
+        if(empty_bst.min_data() != ""){
+            cout << "Incorrect result of min_data. Expected 0 but got : " << empty_bst.min_data() << endl;
+        }
+
+        // case 2:
         int vals[10] = {5, 2, 7, 1, 3, 4, 6, 9, 8, 10};
         BST<string, int> balanced_bst;
         for(int i = 0; i < 10; i++) {
@@ -448,21 +570,83 @@ void test_min_data() {
         if(min_str != "1 data") {
             cout << "Incorrect result of min_data. Expected \"1 data\" but got : " << min_str << endl;
         }
+
+        // case 3:
+        balanced_bst.remove(1);
+        if (balanced_bst.min_data() != "2 data") {
+            cout << "Incorrect result of min_data. Expected \"2 data\" but got : " << balanced_bst.min_data() << endl;
+        }
+
+        // case 4:
+        BST<int, int> int_bst;
+        if(int_bst.min_data() != 0){
+            cout << "Incorrect result of min_data. Expected 0 but got : " << int_bst.min_data() << endl;
+        }
+
+        int int_vals[10] = {5, 2, 7, 1, 3, 4, 6, 9, 8, 10};
+        for(int i = 0; i < 10; i++) {
+            int_bst.insert(i + 1, int_vals[i]);
+        }
+
+        if(int_bst.min_data() != 4){
+            cout << "Incorrect result of min_data. Expected 4 but got : " << int_bst.min_data() << endl; 
+        }
+
+        // case 5:
+        int negative_vals[10] = {-5, -2, -7, -1, -3, -4, -6, -9, -8, -10};
+        BST<int, int> negative_balanced_bst;
+        for(int i = 0; i < 10; i++) {
+            negative_balanced_bst.insert(negative_vals[i], negative_vals[i]);
+        }
+
+        if(negative_balanced_bst.min_data() != -10){
+            cout << "Incorrect result of min_data. Expected -10 but got : " << negative_balanced_bst.min_data() << endl;
+        }
+
+        // case 6:
+        BST<string, string> string_bst;
+
+        if(string_bst.min_data() != ""){
+            cout << "Incorrect result of min_data. Expected '' but got : " << string_bst.min_data() << endl;
+        }
+
+        string_bst.insert("1", "e"); 
+        string_bst.insert("2", "b");
+        string_bst.insert("3", "g");
+        string_bst.insert("4", "a");
+        string_bst.insert("5", "c");
+        string_bst.insert("6", "d");
+        string_bst.insert("7", "f");
+        string_bst.insert("8", "i");
+        string_bst.insert("9", "h");
+        string_bst.insert("10", "j"); 
+
+        if(string_bst.min_data() != "4"){
+            cout << "Incorrect result of min_data. Expected '4' but got : " << string_bst.min_data() << endl;
+        }
+
     } catch(exception& e) {
         cerr << "Error in determining data of min node in bst : " << e.what() << endl;
     }
 }
 
-// min_key Testing
-// 1. min_key from empty tree
-// 2. Insert into BST, then test remove
-// 3. DIfferent data types and data/key values
-//   a. int data and int key
-//   b. float data and float key
-//   c. string data and string key
-//   d. negative data and negative key
+// min_key testing
+/**
+ * case 1: min_key from empty tree
+ * case 2: Test on balanced bst
+ * case 3: Test after remove
+ * case 4: Test on negative values
+ * case 5: Test on string keys
+ */
 void test_min_key() {
     try {
+        // case 1:
+        BST<string, int> empty_bst;
+        if(empty_bst.min_key() != 0){
+            cout << "Incorrect result of min_key. Expected 0 but got : " << empty_bst.min_key() << endl;
+        }
+
+        // case 2:
         int vals[10] = {5, 2, 7, 1, 3, 4, 6, 9, 8, 10};
         BST<string, int> balanced_bst;
         for(int i = 0; i < 10; i++) {
@@ -470,8 +654,52 @@ void test_min_key() {
         }
         int min_k = balanced_bst.min_key();
         if(min_k != 1) {
-            cout << "Incorrect result of min_key. Expected 10 but got : " << min_k << endl;
+            cout << "Incorrect result of min_key. Expected 1 but got : " << min_k << endl;
         }
+
+        // case 3:
+        balanced_bst.remove(3);
+        if (balanced_bst.min_key() != 1){
+            cout << "Incorrect result of min_key. Expected 1 but got : " << balanced_bst.min_key() << endl;
+        }
+        balanced_bst.remove(1);
+        if (balanced_bst.min_key() != 2){
+            cout << "Incorrect result of min_key. Expected 2 but got : " << balanced_bst.min_key() << endl;
+        }
+
+        // case 4:
+        int negative_vals[10] = {-5, -2, -7, -1, -3, -4, -6, -9, -8, -10};
+        BST<string, int> negative_balanced_bst;
+        for(int i = 0; i < 10; i++) {
+            negative_balanced_bst.insert(to_string(negative_vals[i]) + " data", negative_vals[i]);
+        }
+
+        if(negative_balanced_bst.min_key() != -10){
+            cout << "Incorrect result of min_key. Expected -10 but got : " << negative_balanced_bst.min_key() << endl;
+        }
+
+        // case 5:
+        BST<string, string> string_bst;
+
+        if(string_bst.min_key() != ""){
+            cout << "Incorrect result of max_key. Expected '' but got : " << string_bst.max_key() << endl;
+        }
+
+        string_bst.insert("some data", "e"); 
+        string_bst.insert("some data", "b");
+        string_bst.insert("some data", "g");
+        string_bst.insert("some data", "a");
+        string_bst.insert("some data", "c");
+        string_bst.insert("some data", "d");
+        string_bst.insert("some data", "f");
+        string_bst.insert("some data", "i");
+        string_bst.insert("some data", "h");
+        string_bst.insert("some data", "j"); 
+
+        if(string_bst.min_key() != "a"){
+            cout << "Incorrect result of min_key. Expected a but got : " << string_bst.min_key() << endl;
+        }
+
     } catch(exception& e) {
         cerr << "Error in determining key of min node in bst : " << e.what() << endl;
     }
