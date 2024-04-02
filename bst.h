@@ -61,6 +61,7 @@ class BST
         string in_order_tree_walk(Node<Data, Key> *x) const;
         string insertion_order_tree_walk(Node<Data, Key> *x) const;
         Node<Data, Key>* search(Node<Data, Key>* root, Key key) const;
+        Node<Data, Key>* searchData(Node<Data, Key>* root, Data data) const;
         Node<Data, Key>* trim_helper(Node<Data, Key>* node, Key low, Key high);
 
 };
