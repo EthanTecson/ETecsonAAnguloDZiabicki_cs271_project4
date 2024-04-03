@@ -93,6 +93,16 @@ template<typename Data, typename Key>
 string convert(BST<Data, Key>* bst, string bin){
 
     stringstream hex_value;
+    if(bin == ""){
+        return "";
+    }
+    for(int i = 0; i < bin.size(); i++){
+        string substring = bin.substr(i,1);
+        if(substring != "0" && substring != "1"){
+            cout << substring << endl;
+            return "";
+        }
+    }
 
     // bin is less than 4
     if (bin.size() < 4){
