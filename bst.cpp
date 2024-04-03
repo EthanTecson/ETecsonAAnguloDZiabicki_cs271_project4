@@ -206,9 +206,12 @@ void BST<Data, Key>::insert(Data data, Key key) {
         // Correctly set parent of new node
         if(key < parent->key){
             parent->left = new Node<Data, Key>(data, key);
+            parent->left->parent = parent; // set parent pointer of the new node
         }else{
             parent->right = new Node<Data, Key>(data, key);
+            parent->right->parent = parent; // set parent pointer of the new node
         }
+
     }
 }
 
@@ -452,6 +455,7 @@ Key BST<Data, Key>::successor(Key key) const {
         }
     }
 }
+
 
 
 /**
