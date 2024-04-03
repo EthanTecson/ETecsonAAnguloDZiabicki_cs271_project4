@@ -1,3 +1,11 @@
+//-----------------------------------------------//
+//              Binary Search Tree               //
+//               Usecase header                  //
+//                                               //
+// Ethan Tecson, Andrew Angulo, Daniel Ziabicki  //
+//-----------------------------------------------//
+
+
 #ifndef USECASE_H
 #define USECASE_H
 using namespace std;
