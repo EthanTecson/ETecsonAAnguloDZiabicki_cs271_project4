@@ -330,10 +330,16 @@ void BST<Data, Key>::remove(Key key) {
  */
 template <typename Data, typename Key> 
 Data BST<Data, Key>::max_data() const {
+    //if bst empty, default type
     if (root == nullptr){
         return Data();
     }
-    return search(root, max_key())->data;
+    //traverse to rightmost node, return data of that
+    Node<Data, Key> *temp = root;
+    while(temp->right != nullptr){
+        temp = temp->right;
+    }
+    return temp->data;    
 }
 
 /**
@@ -377,10 +383,16 @@ Key BST<Data, Key>::max_key() const {
  */
 template <typename Data, typename Key> 
 Data BST<Data, Key>::min_data() const {
+    //if bst empty, default type
     if (root == nullptr){
         return Data();
     }
-    return search(root, min_key())->data;
+    //traverse to leftmost node, return data of that
+    Node<Data, Key> *temp = root;
+    while(temp->left != nullptr){
+        temp = temp->left;
+    }
+    return temp->data;    
 }
 
 /**
