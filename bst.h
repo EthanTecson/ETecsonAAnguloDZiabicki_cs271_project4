@@ -24,7 +24,6 @@ class Node {
         Node<Data, Key>* left;
         Node<Data, Key>* right;
         Node<Data, Key>* parent;
-        // int key;
         friend class BST<Data, Key>; // Allows BST to access these contents
     public:
         Node();
