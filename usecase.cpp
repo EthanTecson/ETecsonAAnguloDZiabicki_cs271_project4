@@ -1,3 +1,11 @@
+//-----------------------------------------------//
+//              Binary Search Tree               //
+//                 Usecase File                  //
+//                                               //
+// Ethan Tecson, Andrew Angulo, Daniel Ziabicki  //
+//-----------------------------------------------//
+
+
 /*
  * Use your BST to solve the following problem:
  * You are given a csv file in which each line represents a hex, bin pair where each bin is a 4-bit binary and each
@@ -26,6 +34,18 @@
 
 using namespace std;
 
+/**
+ * @brief  create_bst function
+ *
+ * Creates a BST from a CSV file. Each line in the file should contain a data and key pair, separated by a comma.
+ * 
+ * @param fname - name of the CSV file
+ * 
+ * @note Pre-Condition: The CSV file exists and is properly formatted with data and key pairs.
+ * @note Post-Condition: A BST is created with nodes corresponding to each data and key pair in the file.
+ *
+ * @returns Pointer to the created BST
+ */
 template <typename Data, typename Key>
 BST<Data, Key>* create_bst(string fname){ //fname is the CSV file name
     
@@ -56,6 +76,19 @@ BST<Data, Key>* create_bst(string fname){ //fname is the CSV file name
     return fileBST;
 } 
 
+/**
+ * @brief  convert function
+ *
+ * Converts a binary string to a hexadecimal string using a BST. The BST should have nodes with keys corresponding to 4-bit binary strings and data corresponding to the equivalent hexadecimal digit.
+ * 
+ * @param bst - pointer to the BST used for conversion
+ * @param bin - binary string to be converted
+ * 
+ * @note Pre-Condition: The BST exists and is properly populated with nodes having keys of 4-bit binary strings and corresponding hexadecimal digit data.
+ * @note Post-Condition: The binary string is converted to a hexadecimal string using the BST.
+ *
+ * @returns Hexadecimal string equivalent of the input binary string
+ */
 template<typename Data, typename Key>
 string convert(BST<Data, Key>* bst, string bin){
 
