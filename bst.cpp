@@ -53,7 +53,6 @@ Node<Data,Key>::Node(Data d, Key k){
     parent = nullptr;
 }
 
-
 /**
  * @brief Deconstructor for Node Class
  *
@@ -70,7 +69,6 @@ template <typename Data, typename Key>
 Node<Data, Key>::~Node() {
     // Nothing needed
 }
-
 
 /**
  * @brief Helper function for deleting Node objects
@@ -131,9 +129,37 @@ Data Node<Data, Key>::getData() const{
     return data;
 }
 
+/**
+ * @brief  operator= function
+ *
+ * It performs a copy of the data, key, and child nodes from the source node to the target node.
+ * 
+ * @param Node2 - The source node from which data, key, and child nodes will be copied
+ * 
+ * @note Pre-Condition: The source node exists and is properly populated with data, key, and child nodes.
+ * @note Post-Condition: The target node has the same data, key, and child nodes as the source node.
+ *
+ * @returns Reference to the target node after assignment
+ */
+template <typename Data, typename Key>
+Node<Data, Key>& Node<Data, Key>::operator=(const Node<Data, Key>& Node2) {
+    if (this != &Node2) {
+        data = Node2->data;
+        key = Node2->key;
+
+        // Assuming that left and right are pointers to dynamically allocated
+        delete left;
+        delete right;
+        left = Node2 -> left ? new Node<Data, Key>(*Node2->left) : nullptr;
+        right = Node2 -> right ? new Node<Data, Key>(*Node2->right) : nullptr;
+    }
+    return *this;
+}
+
 //===================================
 // BST Class
 //===================================
+
 /**
  * @brief  Constructor for BST Class
  *
@@ -150,8 +176,6 @@ template <typename Data, typename Key>
 BST<Data, Key>::BST() {
     root = nullptr;
 }
-
-
 
 /**
  * @brief  Deconstructor for BST Class
@@ -171,7 +195,6 @@ BST<Data, Key>::~BST() {
         root->deleteNode(root);
     }
 }
-
 
 /**
  * @brief  insert for BST Class
@@ -214,8 +237,6 @@ void BST<Data, Key>::insert(Data data, Key key) {
 
     }
 }
-
-
 
 /**
  * @brief get for BST Class
@@ -456,8 +477,6 @@ Key BST<Data, Key>::successor(Key key) const {
     }
 }
 
-
-
 /**
  * @brief in_order function for BST Class
  *
@@ -607,28 +626,6 @@ bool BST<Data, Key>::empty() const{
 }
 
 /**
- * operator= function
- *
- *
- *
- *
- */
-template <typename Data, typename Key>
-Node<Data, Key>& Node<Data, Key>::operator=(const Node<Data, Key>& Node2) {
-    if (this != &Node2) {
-        data = Node2->data;
-        key = Node2->key;
-
-        // Assuming that left and right are pointers to dynamically allocated memory
-        delete left;
-        delete right;
-        left = Node2 -> left ? new Node<Data, Key>(*Node2->left) : nullptr;
-        right = Node2 -> right ? new Node<Data, Key>(*Node2->right) : nullptr;
-    }
-    return *this;
-}
-
-/**
  * @brief helper function for to_string function for BST class
  *
  * Returns a string of keys within the BST starting at the root
@@ -728,4 +725,3 @@ template <typename Data, typename Key>
 Node<Data, Key>* BST<Data, Key>::getRoot(){
     return root;
 }
-
