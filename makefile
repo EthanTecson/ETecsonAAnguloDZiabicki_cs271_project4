@@ -2,7 +2,7 @@
 # 
 #-----------------------
 
-all: test usecase # runs everything at once
+all: test usecase CTest MTest # runs everything at once
 
 test: test_bst_example.o
 		g++ -o test test_bst_example.o bst.cpp
@@ -15,8 +15,22 @@ usecase: main.o
 
 main.o:
 		g++ -c main.cpp
+
+CTest: test_bst_charlie.o
+		g++ -o CTest test_bst_charlie.o bst.cpp
+
+test_bst_charlie.o: test_bst_charlie.cpp
+		g++ -c test_bst_charlie.cpp
+
+MTest: test_bst.o # CHANGE THIS TO 'TEST' LATER (Only have this name due to multiple test files)
+		g++ -o MTest test_bst.o bst.cpp
+
+test_bst.o: test_bst.cpp
+		g++ -c test_bst.cpp
+
 clean: # Removes all executable files that were made
-		rm -f test usecase *.o *.exe
+		# rm -f test usecase CTest MTest *.o *.exe
+
 
 
 
