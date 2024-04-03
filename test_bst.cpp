@@ -1121,6 +1121,380 @@ void test_trim() {
     }
 }
 
+//  Search Testing
+// 1. Search Test of an empty BST
+// 2. Inserting a bunch of values into the BST and then searching for a specific key
+// 3. Removing a key from the BST and then trying to search for it
+// 4. Searching for a negative key value in the BST
+// 5. Different data types and data/key values
+//   a. int key
+//   b. float key
+//   c. string key
+//   d. negative key (This is really important to think about)
+void test_search() {
+    try {
+        // case 1:
+        BST<string, int> empty_bst;
+        if(empty_bst.search(empty_bst.getRoot(), 0) != nullptr){
+            cout << "Incorrect result of search. Expected nullptr but got : " << empty_bst.search(empty_bst.getRoot(), 0) << endl;
+        }
+
+        // case 2:
+        int vals[10] = {5, 2, 7, 1, 3, 4, 6, 9, 8, 10};
+        BST<string, int> balanced_bst;
+        for(int i = 0; i < 10; i++) {
+            balanced_bst.insert(to_string(vals[i]) + " data", vals[i]);
+        }
+        Node<string, int>* node = balanced_bst.search(balanced_bst.getRoot(), 1);
+        if(node == nullptr || node->getKey() != 1) {
+            cout << "Incorrect result of search. Expected key 1 but got : " << (node == nullptr ? "nullptr" : to_string(node->getKey())) << endl;
+        }
+
+        // case 3:
+        balanced_bst.remove(3);
+        node = balanced_bst.search(balanced_bst.getRoot(), 3);
+        if(node != nullptr) {
+            cout << "Incorrect result of search. Expected nullptr but got : " << node->getKey() << endl;
+        }
+
+        // case 4:
+        int negative_vals[10] = {-5, -2, -7, -1, -3, -4, -6, -9, -8, -10};
+        BST<string, int> negative_balanced_bst;
+        for(int i = 0; i < 10; i++) {
+            negative_balanced_bst.insert(to_string(negative_vals[i]) + " data", negative_vals[i]);
+        }
+        node = negative_balanced_bst.search(negative_balanced_bst.getRoot(), -10);
+        if(node == nullptr || node->getKey() != -10){
+            cout << "Incorrect result of search. Expected key -10 but got : " << (node == nullptr ? "nullptr" : to_string(node->getKey())) << endl;
+        }
+
+        // case 5:
+        BST<string, string> string_bst;
+        string_bst.insert("You", "L"); 
+        string_bst.insert("are", "e");
+        string_bst.insert("my", "b");
+        string_bst.insert("sunshine", "r");
+        string_bst.insert("my", "o");
+        string_bst.insert("only", "n");
+        string_bst.insert("sunshine", "j");
+        string_bst.insert("you", "a");
+        string_bst.insert("make", "m");
+        string_bst.insert("me", "e"); 
+        string_bst.insert("happy", "s"); 
+
+        Node<string, string>* str_node = string_bst.search(string_bst.getRoot(), "a");
+        if(str_node == nullptr || str_node->getKey() != "a"){
+            cout << "Incorrect result of search. Expected key 'a' but got : " << (str_node == nullptr ? "nullptr" : str_node->getKey()) << endl;
+        }
+        if(str_node == nullptr || str_node->getData() != "you"){
+            cout << "Incorrect result of search. Expected data 'you' but got : " << (str_node == nullptr ? "nullptr" : str_node->getData()) << endl;
+
+        }
+
+    } catch(exception& e) {
+        cerr << "Error in searching node in bst : " << e.what() << endl;
+    }
+}
+
+//  getRoot Testing
+// 1. getRoot Test of an empty BST
+// 2. Inserting a bunch of values into the BST and then getting the root
+// 3. Removing the root from the BST and then getting the new root
+// 4. Getting the root of a BST with negative key values
+// 5. Different data types and data/key values
+//   a. int key
+//   b. float key
+//   c. string key
+//   d. negative key (This is really important to think about)
+void test_getRoot() {
+    try {
+        // case 1: Get root of an empty BST
+        BST<string, int> empty_bst;
+        if(empty_bst.getRoot() != nullptr){
+            cout << "Incorrect result of getRoot. Expected nullptr but got : " << empty_bst.getRoot() << endl;
+        }
+
+        // case 2: Inserting a bunch of values into the BST and then getting the root
+        int vals[10] = {5, 2, 7, 1, 3, 4, 6, 9, 8, 10};
+        BST<string, int> balanced_bst;
+        for(int i = 0; i < 10; i++) {
+            balanced_bst.insert(to_string(vals[i]) + " data", vals[i]);
+        }
+        Node<string, int>* node = balanced_bst.getRoot();
+        if(node == nullptr || node->getKey() != 5) {
+            cout << "Incorrect result of getRoot. Expected key 5 but got : " << (node == nullptr ? "nullptr" : to_string(node->getKey())) << endl;
+        }
+
+        // case 3: Removing the root from the BST and then getting the new root
+        balanced_bst.remove(5);
+        node = balanced_bst.getRoot();
+        if(node == nullptr || node->getKey() != 6) {
+            cout << "Incorrect result of getRoot. Expected key 6 but got : " << (node == nullptr ? "nullptr" : to_string(node->getKey())) << endl;
+        }
+
+        // case 4: Getting the root of a BST with negative key values
+        int negative_vals[10] = {-5, -2, -7, -1, -3, -4, -6, -9, -8, -10};
+        BST<string, int> negative_balanced_bst;
+        for(int i = 0; i < 10; i++) {
+            negative_balanced_bst.insert(to_string(negative_vals[i]) + " data", negative_vals[i]);
+        }
+        node = negative_balanced_bst.getRoot();
+        if(node == nullptr || node->getKey() != -5){
+            cout << "Incorrect result of getRoot. Expected key -5 but got : " << (node == nullptr ? "nullptr" : to_string(node->getKey())) << endl;
+        }
+
+        // case 5: Different data types and data/key values
+        BST<string, string> string_bst;
+        string_bst.insert("You", "L"); 
+        string_bst.insert("are", "e");
+        string_bst.insert("my", "b");
+        string_bst.insert("sunshine", "r");
+        string_bst.insert("my", "o");
+        string_bst.insert("only", "n");
+        string_bst.insert("sunshine", "j");
+        string_bst.insert("you", "a");
+        string_bst.insert("make", "m");
+        string_bst.insert("me", "e"); 
+        string_bst.insert("happy", "s"); 
+
+        Node<string, string>* str_node = string_bst.getRoot();
+        if(str_node == nullptr || str_node->getKey() != "L"){
+            cout << "Incorrect result of getRoot. Expected key 'L' but got : " << (str_node == nullptr ? "nullptr" : str_node->getKey()) << endl;
+        }
+        if(str_node == nullptr || str_node->getData() != "You"){
+            cout << "Incorrect result of getRoot. Expected data 'You' but got : " << (str_node == nullptr ? "nullptr" : str_node->getData()) << endl;
+        }
+
+    } catch(exception& e) {
+        cerr << "Error in getting root of bst : " << e.what() << endl;
+    }
+}
+
+//  getKey Testing
+// 1. getKey Test of an empty BST
+// 2. Inserting a bunch of values into the BST and then getting the key of the root
+// 3. Removing the root from the BST and then getting the key of the new root
+// 4. Getting the key of a BST with negative key values
+// 5. Different data types and data/key values
+//   a. int key
+//   b. float key
+//   c. string key
+//   d. negative key (This is really important to think about)
+void test_getKey() {
+    try {
+        // case 1: Get key of an empty BST
+        BST<string, int> empty_bst;
+        if(empty_bst.getRoot() != nullptr){
+            cout << "Incorrect result of getKey. Expected nullptr but got : " << empty_bst.getRoot() << endl;
+        }
+
+        // case 2: Inserting a bunch of values into the BST and then getting the key
+        int vals[10] = {5, 2, 7, 1, 3, 4, 6, 9, 8, 10};
+        BST<string, int> balanced_bst;
+        for(int i = 0; i < 10; i++) {
+            balanced_bst.insert(to_string(vals[i]) + " data", vals[i]);
+        }
+        Node<string, int>* node = balanced_bst.getRoot();
+        if(node == nullptr || node->getKey() != 5) {
+            cout << "Incorrect result of getKey. Expected key 5 but got : " << (node == nullptr ? "nullptr" : to_string(node->getKey())) << endl;
+        }
+
+        // case 3: Removing the root from the BST and then getting the new key
+        balanced_bst.remove(5);
+        node = balanced_bst.getRoot();
+        if(node == nullptr || node->getKey() != 6) {
+            cout << "Incorrect result of getKey. Expected key 6 but got : " << (node == nullptr ? "nullptr" : to_string(node->getKey())) << endl;
+        }
+
+        // case 4: Getting the key of a BST with negative key values
+        int negative_vals[10] = {-5, -2, -7, -1, -3, -4, -6, -9, -8, -10};
+        BST<string, int> negative_balanced_bst;
+        for(int i = 0; i < 10; i++) {
+            negative_balanced_bst.insert(to_string(negative_vals[i]) + " data", negative_vals[i]);
+        }
+        node = negative_balanced_bst.getRoot();
+        if(node == nullptr || node->getKey() != -5){
+            cout << "Incorrect result of getKey. Expected key -5 but got : " << (node == nullptr ? "nullptr" : to_string(node->getKey())) << endl;
+        }
+
+        // case 5: Different data types and data/key values
+        BST<string, string> string_bst;
+        string_bst.insert("You", "L"); 
+        string_bst.insert("are", "e");
+        string_bst.insert("my", "b");
+        string_bst.insert("sunshine", "r");
+        string_bst.insert("my", "o");
+        string_bst.insert("only", "n");
+        string_bst.insert("sunshine", "j");
+        string_bst.insert("you", "a");
+        string_bst.insert("make", "m");
+        string_bst.insert("me", "e"); 
+        string_bst.insert("happy", "s"); 
+
+        Node<string, string>* str_node = string_bst.getRoot();
+        if(str_node == nullptr || str_node->getKey() != "L"){
+            cout << "Incorrect result of getKey. Expected key 'L' but got : " << (str_node == nullptr ? "nullptr" : str_node->getKey()) << endl;
+        }
+
+    } catch(exception& e) {
+        cerr << "Error in getting key of bst node : " << e.what() << endl;
+    }
+}
+
+//  getData Testing
+// 1. getData Test of an empty BST
+// 2. Inserting a bunch of values into the BST and then getting the data of the root
+// 3. Removing the root from the BST and then getting the data of the new root
+// 4. Getting the data of a BST with negative key values
+// 5. Different data types and data/key values
+//   a. int data
+//   b. float data
+//   c. string data
+//   d. negative data (This is really important to think about)
+void test_getData() {
+    try {
+        // case 1: Get data of an empty BST
+        BST<string, int> empty_bst;
+        if(empty_bst.getRoot() != nullptr){
+            cout << "Incorrect result of getData. Expected nullptr but got : " << empty_bst.getRoot() << endl;
+        }
+
+        // case 2: Inserting a bunch of values into the BST and then getting the data
+        int vals[10] = {5, 2, 7, 1, 3, 4, 6, 9, 8, 10};
+        BST<string, int> balanced_bst;
+        for(int i = 0; i < 10; i++) {
+            balanced_bst.insert(to_string(vals[i]) + " data", vals[i]);
+        }
+        Node<string, int>* node = balanced_bst.getRoot();
+        if(node == nullptr || node->getData() != "5 data") {
+            cout << "Incorrect result of getData. Expected data '5 data' but got : " << (node == nullptr ? "nullptr" : node->getData()) << endl;
+        }
+
+        // case 3: Removing the root from the BST and then getting the new data
+        balanced_bst.remove(5);
+        node = balanced_bst.getRoot();
+        if(node == nullptr || node->getData() != "6 data") {
+            cout << "Incorrect result of getData. Expected data '6 data' but got : " << (node == nullptr ? "nullptr" : node->getData()) << endl;
+        }
+
+        // case 4: Getting the data of a BST with negative key values
+        int negative_vals[10] = {-5, -2, -7, -1, -3, -4, -6, -9, -8, -10};
+        BST<string, int> negative_balanced_bst;
+        for(int i = 0; i < 10; i++) {
+            negative_balanced_bst.insert(to_string(negative_vals[i]) + " data", negative_vals[i]);
+        }
+        node = negative_balanced_bst.getRoot();
+        if(node == nullptr || node->getData() != "-5 data"){
+            cout << "Incorrect result of getData. Expected data '-5 data' but got : " << (node == nullptr ? "nullptr" : node->getData()) << endl;
+        }
+
+        // case 5: Different data types and data/key values
+        BST<string, string> string_bst;
+        string_bst.insert("You", "L"); 
+        string_bst.insert("are", "e");
+        string_bst.insert("my", "b");
+        string_bst.insert("sunshine", "r");
+        string_bst.insert("my", "o");
+        string_bst.insert("only", "n");
+        string_bst.insert("sunshine", "j");
+        string_bst.insert("you", "a");
+        string_bst.insert("make", "m");
+        string_bst.insert("me", "e"); 
+        string_bst.insert("happy", "s"); 
+
+        Node<string, string>* str_node = string_bst.getRoot();
+        if(str_node == nullptr || str_node->getData() != "You"){
+            cout << "Incorrect result of getData. Expected data 'You' but got : " << (str_node == nullptr ? "nullptr" : str_node->getData()) << endl;
+        }
+
+    } catch(exception& e) {
+        cerr << "Error in getting data of bst node : " << e.what() << endl;
+    }
+}
+
+//  operator= Testing
+// 1. Assigning an empty BST to another empty BST
+// 2. Assigning a non-empty BST to an empty BST
+// 3. Assigning a non-empty BST to another non-empty BST
+// 4. Assigning a BST with negative key values to another BST
+// 5. Different data types and data/key values
+//   a. int key
+//   b. float key
+//   c. string key
+//   d. negative key (This is really important to think about)
+
+void test_operator_equal() {
+    try {
+        // case 1: Assigning an empty BST to another empty BST
+        BST<string, int> empty_bst1, empty_bst2;
+        empty_bst1 = empty_bst2;
+        if(empty_bst1.getRoot() != nullptr){
+            cout << "Incorrect result of operator=. Expected nullptr but got : " << empty_bst1.getRoot() << endl;
+        }
+
+        // case 2: Assigning a non-empty BST to an empty BST
+        int vals[10] = {5, 2, 7, 1, 3, 4, 6, 9, 8, 10};
+        BST<string, int> balanced_bst;
+        for(int i = 0; i < 10; i++) {
+            balanced_bst.insert(to_string(vals[i]) + " data", vals[i]);
+        }
+        empty_bst1 = balanced_bst;
+        Node<string, int>* node = empty_bst1.getRoot();
+        if(node == nullptr || node->getKey() != 5) {
+            cout << "Incorrect result of operator=. Expected key 5 but got : " << (node == nullptr ? "nullptr" : to_string(node->getKey())) << endl;
+        }
+
+        // case 3: Assigning a non-empty BST to another non-empty BST
+        BST<string, int> balanced_bst2;
+        balanced_bst2.insert("11 data", 11);
+        balanced_bst = balanced_bst2;
+        node = balanced_bst.getRoot();
+        if(node == nullptr || node->getKey() != 11) {
+            cout << "Incorrect result of operator=. Expected key 11 but got : " << (node == nullptr ? "nullptr" : to_string(node->getKey())) << endl;
+        }
+
+        // case 4: Assigning a BST with negative key values to another BST
+        int negative_vals[10] = {-5, -2, -7, -1, -3, -4, -6, -9, -8, -10};
+        BST<string, int> negative_balanced_bst;
+        for(int i = 0; i < 10; i++) {
+            negative_balanced_bst.insert(to_string(negative_vals[i]) + " data", negative_vals[i]);
+        }
+        balanced_bst = negative_balanced_bst;
+        node = balanced_bst.getRoot();
+        if(node == nullptr || node->getKey() != -5){
+            cout << "Incorrect result of operator=. Expected key -5 but got : " << (node == nullptr ? "nullptr" : to_string(node->getKey())) << endl;
+        }
+
+        // case 5: Different data types and data/key values
+        BST<string, string> string_bst;
+        string_bst.insert("You", "L"); 
+        string_bst.insert("are", "e");
+        string_bst.insert("my", "b");
+        string_bst.insert("sunshine", "r");
+        string_bst.insert("my", "o");
+        string_bst.insert("only", "n");
+        string_bst.insert("sunshine", "j");
+        string_bst.insert("you", "a");
+        string_bst.insert("make", "m");
+        string_bst.insert("me", "e"); 
+        string_bst.insert("happy", "s"); 
+
+        BST<string, string> string_bst2;
+        string_bst2 = string_bst;
+        Node<string, string>* str_node = string_bst2.getRoot();
+        if(str_node == nullptr || str_node->getKey() != "L"){
+            cout << "Incorrect result of operator=. Expected key 'L' but got : " << (str_node == nullptr ? "nullptr" : str_node->getKey()) << endl;
+        }
+        if(str_node == nullptr || str_node->getData() != "You"){
+            cout << "Incorrect result of operator=. Expected data 'You' but got : " << (str_node == nullptr ? "nullptr" : str_node->getData()) << endl;
+        }
+
+    } 
+    catch(exception& e) {
+        cerr << "Error in assigning bst using operator= : " << e.what() << endl;
+    }
+}
+
 void test_binhex(){
     try {
         BST<string,string>* bst1 = create_bst<string,string>("binhex.txt");
@@ -1168,6 +1542,11 @@ int main() {
     test_successor();
     test_in_order();
     test_trim();
+    test_search();
+    test_getRoot();
+    test_getData();
+    test_getKey();
+    test_operator_equal();
     test_binhex();
 
     cout << "Testing completed" << endl;
