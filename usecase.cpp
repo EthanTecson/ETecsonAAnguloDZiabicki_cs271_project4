@@ -119,7 +119,16 @@ string convert(BST<Data, Key>* bst, string bin){
     for (int i = 0; i < bin.size(); i+=4){
         string substring = bin.substr(i,4);
         hex_value << bst->search(bst->getRoot(), substring)->getData();
-    } 
+    }
 
-    return hex_value.str();
+    string hex = hex_value.str();
+    int idx = 0;
+    for(int i = 0; i < hex.size(); i++){
+        if(hex.substr(i, 1) == "0"){
+            idx++;
+        }else{
+            break;
+        }
+    }
+    return hex.substr(idx, hex.size());
 }
