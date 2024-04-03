@@ -783,7 +783,6 @@ void test_successor() {
             cout << "Incorrect result of successor of -5. Expected 0 but got : " << succ_flo << endl;
         }
         succ_flo = float_tree.successor(8.3);
-        cout << succ_flo << endl;
         if(std::to_string(succ_flo).substr(0, 3) != "9.2") {
             cout << "Incorrect result of successor of 8.3. Expected 9.2 but got : " << succ_flo << endl;
         }
@@ -901,7 +900,7 @@ void test_in_order() {
             cout << "Incorrect in_order result after testing on empty tree. Expected  but got : " << bst_str << endl;
         }
         string vals[5] = {"hello", "world", "I am hungry", "the window is open", "it is not raining"};
-        for(int i = 1; i <= 5; i++) {
+        for(int i = 0; i < 5; i++) {
             bst.insert("some data", vals[i]);
         }
         bst_str = bst.in_order();
@@ -909,11 +908,11 @@ void test_in_order() {
         if(bst_str != "I am hungry hello it is not raining the window is open world") {
             cout << "Incorrect in_order result after inserting strings. Expected I am hungry hello it is not raining the window is open world but got : " << bst_str << endl;
         }
-        for(int i = 5; i >= 1; i--) {
+        for(int i = 4; i >= 0; i--) {
             bst.insert("some data", vals[i]);
         }
         bst_str = bst.in_order();
-        if(bst_str != "hello world I am hungry the window is open it is not raining it is not raining the window is open I am hungry world hello") {
+        if(bst_str != "I am hungry I am hungry hello hello it is not raining it is not raining the window is open the window is open world world") {
             cout << "Incorrect in_order result after inserting keys more strings. Expected really long string but got : " << bst_str << endl;
         }
 
@@ -1012,8 +1011,8 @@ void test_trim() {
             int_tree.insert(vals1[i], vals1[i]);
         }
         int_tree.trim(1, 5);
-        if(int_tree.to_string() != "3 4"){
-            cout << "Incorrect tree after trimming  with low=1, high=5. Expected 3 4 5 but got : " << int_tree.to_string() << endl;
+        if(int_tree.to_string() != "3 2 4 1 5"){
+            cout << "Incorrect tree after trimming  with low=1, high=5. Expected 3 2 4 1 5 but got : " << int_tree.to_string() << endl;
         }
         int_tree.trim(0, 0);
         if(int_tree.to_string() != ""){
@@ -1021,8 +1020,8 @@ void test_trim() {
         }
         int_tree.insert(0, 0);
         int_tree.trim(0, 0);
-        if(int_tree.to_string() != ""){
-            cout << "Incorrect tree after trimming  with low=0, high=0. Expected  but got : " << int_tree.to_string() << endl;
+        if(int_tree.to_string() != "0"){
+            cout << "Incorrect tree after trimming  with low=0, high=0. Expected 0 but got : " << int_tree.to_string() << endl;
         }
 
         //====================//====================//====================//====================//====================
@@ -1045,8 +1044,8 @@ void test_trim() {
             float_tree.insert(vals2[i], vals2[i]);
         }
         float_tree.trim(1.2, 5.5);
-        if(float_tree.to_string() != "3.5 4.1"){
-            cout << "Incorrect tree after trimming  with low=1, high=5. Expected 3.5 4.1 but got : " << float_tree.to_string() << endl;
+        if(float_tree.to_string() != "3.5 2.2 4.1 1.3 5.4"){
+            cout << "Incorrect tree after trimming  with low=1, high=5. Expected 3.5 2.2 4.1 1.3 5.4 but got : " << float_tree.to_string() << endl;
         }
         float_tree.trim(0, 0);
         if(float_tree.to_string() != ""){
@@ -1054,8 +1053,8 @@ void test_trim() {
         }
         float_tree.insert(0, 0);
         float_tree.trim(0, 0);
-        if(float_tree.to_string() != ""){
-            cout << "Incorrect tree after trimming  with low=0, high=0. Expected  but got : " << float_tree.to_string() << endl;
+        if(float_tree.to_string() != "0"){
+            cout << "Incorrect tree after trimming  with low=0, high=0. Expected 0 but got : " << float_tree.to_string() << endl;
         }
 
         //====================//====================//====================//====================//====================
@@ -1063,7 +1062,7 @@ void test_trim() {
         BST<string, string> string_tree;
         string_tree.trim("a", "b");
         if(string_tree.to_string() != ""){
-            cout << "Incorrect tree after trimming  with low=-1.3, high=1.7. Expected  but got : " << string_tree.to_string() << endl;
+            cout << "Incorrect tree after trimming  with low=a, high=b. Expected  but got : " << string_tree.to_string() << endl;
         }
 
         string vals3[9] = {"hello", "there", "my name is", "bob", "it is rainy today", "the rain is sad", "but soon it will be sunny", "and then", "the sun is happy"};
@@ -1071,16 +1070,16 @@ void test_trim() {
             string_tree.insert(vals3[i], vals3[i]);
         }
         string_tree.trim("pillow", "zillow");
-        if(string_tree.to_string() != ""){
-            cout << "Incorrect tree after trimming  with low=pillow, high=zillow. Expected  but got : " << string_tree.to_string() << endl;
+        if(string_tree.to_string() != "there the rain is sad the sun is happy"){
+            cout << "Incorrect tree after trimming  with low=pillow, high=zillow. Expected there the rain is sad the sun is happy but got : " << string_tree.to_string() << endl;
         }
         for(int i = 0; i < 9; i++){
             string_tree.insert(vals3[i], vals3[i]);
         }
         //a b c d e f g h i j k l m n o p q r s t u v w x y z
         string_tree.trim("bonjour", "loon");
-        if(string_tree.to_string() != "hello there"){
-            cout << "Incorrect tree after trimming  with low=1, high=5. Expected hello there but got : " << string_tree.to_string() << endl;
+        if(string_tree.to_string() != "hello but soon it will be sunny it is rainy today"){
+            cout << "Incorrect tree after trimming  with low=boajour, high=loon. Expected hello but soon it will be sunny it is rainy today but got : " << string_tree.to_string() << endl;
         }
         string_tree.trim("", "");
         if(string_tree.to_string() != ""){
@@ -1105,8 +1104,8 @@ void test_trim() {
             char_tree.insert(vals4[i], vals4[i]);
         }
         char_tree.trim('a', 'e');
-        if(char_tree.to_string() != "c b d"){
-            cout << "Incorrect tree after trimming  with low=pillow, high=zillow. Expected c b d but got : " << char_tree.to_string() << endl;
+        if(char_tree.to_string() != "c b d a e"){
+            cout << "Incorrect tree after trimming  with low=pillow, high=zillow. Expected c b d a e but got : " << char_tree.to_string() << endl;
         }
         for(int i = 0; i < 5; i++){
             char_tree.insert(vals4[i], vals4[i]);
