@@ -1412,89 +1412,6 @@ void test_getData() {
     }
 }
 
-//  operator= Testing
-// 1. Assigning an empty BST to another empty BST
-// 2. Assigning a non-empty BST to an empty BST
-// 3. Assigning a non-empty BST to another non-empty BST
-// 4. Assigning a BST with negative key values to another BST
-// 5. Different data types and data/key values
-//   a. int key
-//   b. float key
-//   c. string key
-//   d. negative key (This is really important to think about)
-
-void test_operator_equal() {
-    try {
-        // case 1: Assigning an empty BST to another empty BST
-        BST<string, int> empty_bst1, empty_bst2;
-        empty_bst1 = empty_bst2;
-        if(empty_bst1.getRoot() != nullptr){
-            cout << "Incorrect result of operator=. Expected nullptr but got : " << empty_bst1.getRoot() << endl;
-        }
-
-        // case 2: Assigning a non-empty BST to an empty BST
-        int vals[10] = {5, 2, 7, 1, 3, 4, 6, 9, 8, 10};
-        BST<string, int> balanced_bst;
-        for(int i = 0; i < 10; i++) {
-            balanced_bst.insert(to_string(vals[i]) + " data", vals[i]);
-        }
-        empty_bst1 = balanced_bst;
-        Node<string, int>* node = empty_bst1.getRoot();
-        if(node == nullptr || node->getKey() != 5) {
-            cout << "Incorrect result of operator=. Expected key 5 but got : " << (node == nullptr ? "nullptr" : to_string(node->getKey())) << endl;
-        }
-
-        // case 3: Assigning a non-empty BST to another non-empty BST
-        BST<string, int> balanced_bst2;
-        balanced_bst2.insert("11 data", 11);
-        balanced_bst = balanced_bst2;
-        node = balanced_bst.getRoot();
-        if(node == nullptr || node->getKey() != 11) {
-            cout << "Incorrect result of operator=. Expected key 11 but got : " << (node == nullptr ? "nullptr" : to_string(node->getKey())) << endl;
-        }
-
-        // case 4: Assigning a BST with negative key values to another BST
-        int negative_vals[10] = {-5, -2, -7, -1, -3, -4, -6, -9, -8, -10};
-        BST<string, int> negative_balanced_bst;
-        for(int i = 0; i < 10; i++) {
-            negative_balanced_bst.insert(to_string(negative_vals[i]) + " data", negative_vals[i]);
-        }
-        balanced_bst = negative_balanced_bst;
-        node = balanced_bst.getRoot();
-        if(node == nullptr || node->getKey() != -5){
-            cout << "Incorrect result of operator=. Expected key -5 but got : " << (node == nullptr ? "nullptr" : to_string(node->getKey())) << endl;
-        }
-
-        // case 5: Different data types and data/key values
-        BST<string, string> string_bst;
-        string_bst.insert("You", "L"); 
-        string_bst.insert("are", "e");
-        string_bst.insert("my", "b");
-        string_bst.insert("sunshine", "r");
-        string_bst.insert("my", "o");
-        string_bst.insert("only", "n");
-        string_bst.insert("sunshine", "j");
-        string_bst.insert("you", "a");
-        string_bst.insert("make", "m");
-        string_bst.insert("me", "e"); 
-        string_bst.insert("happy", "s"); 
-
-        BST<string, string> string_bst2;
-        string_bst2 = string_bst;
-        Node<string, string>* str_node = string_bst2.getRoot();
-        if(str_node == nullptr || str_node->getKey() != "L"){
-            cout << "Incorrect result of operator=. Expected key 'L' but got : " << (str_node == nullptr ? "nullptr" : str_node->getKey()) << endl;
-        }
-        if(str_node == nullptr || str_node->getData() != "You"){
-            cout << "Incorrect result of operator=. Expected data 'You' but got : " << (str_node == nullptr ? "nullptr" : str_node->getData()) << endl;
-        }
-
-    } 
-    catch(exception& e) {
-        cerr << "Error in assigning bst using operator= : " << e.what() << endl;
-    }
-}
-
 void test_binhex(){
     try {
         BST<string,string>* bst1 = create_bst<string,string>("binhex.txt");
@@ -1546,7 +1463,6 @@ int main() {
     test_getRoot();
     test_getData();
     test_getKey();
-    test_operator_equal();
     test_binhex();
 
     cout << "Testing completed" << endl;

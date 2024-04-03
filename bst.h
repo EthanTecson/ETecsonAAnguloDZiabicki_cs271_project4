@@ -30,7 +30,6 @@ class Node {
         Node(Data d, Key k);
         ~Node();
         void deleteNode(Node<Data, Key>* node); //Helper function for deconstructor
-        Node<Data, Key>& operator=(const Node<Data, Key>& Node2);
         Key getKey() const;
         Data getData() const;
 };
