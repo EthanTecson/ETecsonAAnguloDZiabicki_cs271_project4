@@ -20,6 +20,22 @@ int main() {
     cout << "Enter binary representation for conversion:" << endl;
     getline(cin, userInput);
     string bin = userInput;
+    if (bin.size() == 0)
+    {
+        cout << "Please enter a valid binary number" << endl;
+        return 0;
+    }
+    for (int i = 0; i < bin.size(); i++) {
+        string substring = bin.substr(i,1);
+        if (substring == " "){
+            cout << "Please enter valid binary number without spaces" << endl; 
+            return 0; 
+        }
+        if (substring != "0" && substring != "1") {
+            cout << "Please enter a valid binary number" << endl;
+            return 0; 
+        }
+    }
     string hex = convert(bst, bin);
     cout << "Hexidecimal representation of " << bin << " is " << hex << endl;
 
