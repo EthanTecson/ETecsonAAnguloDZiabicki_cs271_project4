@@ -29,7 +29,7 @@ test_bst.o: test_bst.cpp
 		g++ -c test_bst.cpp
 
 clean: # Removes all executable files that were made
-		# rm -f test usecase CTest MTest *.o *.exe
+		rm -f test usecase CTest MTest *.o *.exe
 
 
 
@@ -37,7 +37,7 @@ clean: # Removes all executable files that were made
 
 
 #For when doin in vscode on Windows:
-# del /Q /F test usecase *.o *.exe
+# del /Q /F test usecase CTest MTest *.o *.exe
 
 #For when on linux & Mac:
 # rm -f test usecase *.o *.exe
