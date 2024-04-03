@@ -24,7 +24,7 @@ clean: # Removes all executable files that were made
 
 
 #For when doin in vscode on Windows:
-# del /Q /F test usecase CTest MTest *.o *.exe
+# del /Q /F test usecase *.o *.exe
 
 #For when on linux & Mac:
 # rm -f test usecase *.o *.exe
