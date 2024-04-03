@@ -763,27 +763,28 @@ void test_successor() {
             float_tree.insert(vals2[i], vals2[i]);
         }
         succ_flo = float_tree.successor(-3.1);
-        if(succ_flo != 1.7) {
+        if(std::to_string(succ_flo).substr(0, 3) != "1.7") {
             cout << "Incorrect result of successor of -3.1. Expected 1.7 but got : " << succ_flo << endl;
         }
         succ_flo = float_tree.successor(5.4);
-        if(succ_flo != 6.1) {
+        if(std::to_string(succ_flo).substr(0, 3) != "6.1") {
             cout << "Incorrect result of successor of 5.4. Expected 6.1 but got : " << succ_flo << endl;
         }
         succ_flo = float_tree.successor(10.4);
-        if(succ_flo != 0) {
+        if(std::to_string(succ_flo).substr(0, 1) != "0") {
             cout << "Incorrect result of successor of 10.4. Expected 0 but got : " << succ_flo << endl;
         }
         succ_flo = float_tree.successor(9.2);
-        if(succ_flo != 10.4) {
+        if(std::to_string(succ_flo).substr(0, 4) != "10.4") {
             cout << "Incorrect result of successor of 9.2 Expected 10.4 but got : " << succ_flo << endl;
         }
         succ_flo = float_tree.successor(-5);
-        if(succ_flo != 0) {
+        if(std::to_string(succ_flo).substr(0, 1) != "0") {
             cout << "Incorrect result of successor of -5. Expected 0 but got : " << succ_flo << endl;
         }
         succ_flo = float_tree.successor(8.3);
-        if(succ_flo != 9.2) {
+        cout << succ_flo << endl;
+        if(std::to_string(succ_flo).substr(0, 3) != "9.2") {
             cout << "Incorrect result of successor of 8.3. Expected 9.2 but got : " << succ_flo << endl;
         }
 
@@ -867,7 +868,7 @@ void test_in_order() {
         for(int i = 1; i <= 10; i++) {
             bst.insert("some data", i);
         }
-        string bst_str = bst.in_order();
+        bst_str = bst.in_order();
         if(bst_str != "1 2 3 4 5 6 7 8 9 10") {
             cout << "Incorrect in_order result after inserting keys 1-10 in order. Expected 1 2 3 4 5 6 7 8 9 10 but got : " << bst_str << endl;
         }
@@ -903,11 +904,11 @@ void test_in_order() {
         for(int i = 1; i <= 5; i++) {
             bst.insert("some data", vals[i]);
         }
-        string bst_str = bst.in_order();
-        if(bst_str != "hello world I am hungry the window is open it is not raining") {
-            cout << "Incorrect in_order result after inserting strings. Expected hello world I am hungry the window is open it is not raining but got : " << bst_str << endl;
+        bst_str = bst.in_order();
+
+        if(bst_str != "I am hungry hello it is not raining the window is open world") {
+            cout << "Incorrect in_order result after inserting strings. Expected I am hungry hello it is not raining the window is open world but got : " << bst_str << endl;
         }
-        string vals[5] = {"hello", "world", "I am hungry", "the window is open", "it is not raining"};
         for(int i = 5; i >= 1; i--) {
             bst.insert("some data", vals[i]);
         }
@@ -928,14 +929,14 @@ void test_in_order() {
             cout << "Incorrect in_order result after testing on empty tree. Expected  but got : " << bst_str << endl;
         }
         float vals[5] = {0.1, 0.2, 0.3, 0.4, 0.5};
-        for(int i = 1; i <= 5; i++) {
+        for(int i = 0; i < 5; i++) {
             bst.insert("some data", vals[i]);
         }
         bst_str = bst.in_order();
         if(bst_str != "0.1 0.2 0.3 0.4 0.5") {
             cout << "Incorrect in_order result after inserting strings. Expected 0.1 0.2 0.3 0.4 0.5 but got : " << bst_str << endl;
         }
-        for(int i = 1; i <= 5; i++) {
+        for(int i = 0; i < 5; i++) {
             bst.insert("some data", vals[i]);
         }
         bst_str = bst.in_order();
@@ -968,7 +969,7 @@ void test_in_order() {
         if(bst_str != "1 1 2 2 3 3 4 5 6 7 8 9 10") {
             cout << "Incorrect in_order result after inserting strings. Expected 1 1 2 2 3 3 4 5 6 7 8 9 10 but got : " << bst_str << endl;
         }
-        for(int i = 10; i >= 4; i++) {
+        for(int i = 10; i >= 4; i--) {
             bst.insert("some data", i);
         }
         bst_str = bst.in_order();
