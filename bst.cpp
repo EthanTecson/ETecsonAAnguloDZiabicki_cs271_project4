@@ -97,6 +97,40 @@ Node<Data, Key>::~Node() {
     }
  }
 
+/**
+ * @brief getKey for Node Class
+ *
+ * Returns key of a node (needed for usecase)
+ *
+ *@param none
+ * 
+ * @note Pre-Condition: There exist a node
+ * @note Post-Condition:a none
+ *
+ * @returns key of node or default Key
+ */
+template <typename Data, typename Key>
+Key Node<Data, Key>::getKey() const{
+        return key;
+}
+
+/**
+ * @brief getData for Node Class
+ *
+ * Returns data of a node (needed for usecase)
+ *
+ *@param none
+ * 
+ * @note Pre-Condition: There exist a node
+ * @note Post-Condition:a none
+ *
+ * @returns data of node or default Key
+ */
+template <typename Data, typename Key>
+Data Node<Data, Key>::getData() const{
+    return data;
+}
+
 //===================================
 // BST Class
 //===================================
@@ -674,18 +708,20 @@ Node<Data, Key>* BST<Data, Key>::search(Node<Data, Key>* root, Key key) const {
     return search(root->left, key);
 }
 
-// Node<Data, Key>* searchData(Node<Data, Key>* root, Data data) const {
-//     if(root == nullptr || root->data == data) {
-//         return data;
-//     }
-//     else {
-//         Node<Data, Key>* leftSearch = searchData(root->left, data);
-//         Node<Data, Key>* rightSearch = searchData(root->right, data);
-//         if(leftSearch != nullptr) {
-//             return leftSearch;
-//         }
-//         else {
-//             return rightSearch;
-//         }
-//     }
-// }
+/**
+ * @brief getRoot for BST Class
+ *
+ * Returns root of BST object
+ *
+ *@param none
+ * 
+ * @note Pre-Condition: There exist a BST object
+ * @note Post-Condition: none
+ *
+ * @returns root of a BST object
+ */
+template <typename Data, typename Key>
+Node<Data, Key>* BST<Data, Key>::getRoot(){
+    return root;
+}
+

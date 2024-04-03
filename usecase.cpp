@@ -20,57 +20,64 @@
  */
 
 #include "bst.cpp"
-#include "usecase.h"
-#include <iostream>
 #include <sstream>
 #include <string>
 #include <fstream>
-#include <bitset>
 
 using namespace std;
+
 template <typename Data, typename Key>
-BinarySearchTree<Data, Key>* create_bst(string fname){ //fname is the CSV file name
+BST<Data, Key>* create_bst(string fname){ //fname is the CSV file name
     
     // Opening the file
     ifstream file(fname);
     string line;
 
     // Creating empty BST
-    BST<Data, Key> fileBST;
+    BST<Data, Key>* fileBST = new BST<Data, Key>;
 
     // Reading data (All info from Data Systems)
     while(getline(file, line)){
         stringstream ss(line);
         string item;
-        Data d;
-        Key k;
+        Data data;
+        Key key;
 
         // Get the values from each line
         getline(ss, item, ',');
-        data = static_cast<Data>(stoi(item)); //Grabs the hexadecimal
+        data = item; //Grabs the hexadecimal
         getline(ss, item, ',');
-        key = static_cast<Key>(stoi(item)); //Grabs the Binary value
+        key = item; //Grabs the Binary value
 
-        fileBST.insert(data, key)
+        fileBST->insert(data, key);
 
     }
 
     return fileBST;
 } 
 
-// Using bitset function to convert binary to hex
-string bin_to_hex(string bin){
-    bitset<32> set(bin_str);
-    stringstream hex_stream;
-    hex_stream << hex << set.to_ulong();
-    return hex_stream.str(); //hex as a string
-}
-
 template<typename Data, typename Key>
-string convert(BinarySearchTree<D, K>* bst, string bin){
-    string hexValue = bin_to_hex(bin); //Hex value
+string convert(BST<Data, Key>* bst, string bin){
 
-    //Searching the node based on the Hex value which is data and returning the key
-    return bst->searchData(bst->root, hexValue)->key; 
+    stringstream hex_value;
+
+    // bin is less than 4
+    if (bin.size() < 4){
+        while (bin.size() < 4){
+            bin = "0" + bin;
+        }
+    }
+    if (bin.size() % 4 != 0){
+        while (bin.size() % 4 != 0){
+            bin = "0" + bin;
+        }
+    }
+
+    // regular operations
+    for (int i = 0; i < bin.size(); i+=4){
+        string substring = bin.substr(i,4);
+        hex_value << bst->search(bst->getRoot(), substring)->getData();
+    } 
+
+    return hex_value.str();
 }
-

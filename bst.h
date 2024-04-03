@@ -12,7 +12,6 @@
 #include <iostream>
 using namespace std;
 
-
 template <typename Data, typename Key>
 class BST;
 
@@ -33,7 +32,8 @@ class Node {
         ~Node();
         void deleteNode(Node<Data, Key>* node); //Helper function for deconstructor
         Node<Data, Key>& operator=(const Node<Data, Key>& Node2);
-
+        Key getKey() const;
+        Data getData() const;
 };
 
 template <typename Data, typename Key>
@@ -42,7 +42,6 @@ class BST
     private:
         Node<Data, Key>* root;
         Node<Data, Key>* remove_helper(Node<Data, Key>* root, Key key);
-
     public:
         BST();
         ~BST();
@@ -63,6 +62,6 @@ class BST
         Node<Data, Key>* search(Node<Data, Key>* root, Key key) const;
         Node<Data, Key>* searchData(Node<Data, Key>* root, Data data) const;
         Node<Data, Key>* trim_helper(Node<Data, Key>* node, Key low, Key high);
-
+        Node<Data, Key>* getRoot();
 };
 #endif // BST_H
